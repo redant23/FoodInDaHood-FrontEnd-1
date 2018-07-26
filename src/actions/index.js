@@ -15,7 +15,10 @@ import {
   STOP_VENDORLIST_INFINITY_SCROLL,
   RESUME_VENDORLIST_INFINITY_SCROLL,
   ACTIVATE_SCROLL_LOADING,
-  DE_ACTIVATE_SCROLL_LOADING
+  DE_ACTIVATE_SCROLL_LOADING,
+  UPDATE_SEARCHED_VENDOR_LIST,
+  RESET_SEARCHED_VENDOR_LIST,
+  UPDATE_VENDOR_LIST_TOTAL_NUMBER
 } from "../constants";
 
 export const updateInitialGeoLocationAction = initialGeoLocation => ({
@@ -87,4 +90,18 @@ export const activateScrollLoadingAction = () => ({
 
 export const deactivateScrollLoadingAction = () => ({
   type: DE_ACTIVATE_SCROLL_LOADING
+});
+
+export const updateSearchedVendorListAction = vendorList => ({
+  type: UPDATE_SEARCHED_VENDOR_LIST,
+  vendorList
+});
+
+export const resetSearchedVendorListAction = () => ({
+  type: RESET_SEARCHED_VENDOR_LIST
+});
+
+export const updateVendorListTotalNumberAction = totalNumber => ({
+  type: UPDATE_VENDOR_LIST_TOTAL_NUMBER,
+  totalNumber
 });

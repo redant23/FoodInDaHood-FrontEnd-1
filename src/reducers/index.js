@@ -7,6 +7,8 @@ import vendorListPageNumberStatus from "./vendorListPageNumberStatus";
 import vendorListDistance from "./vendorListDistance";
 import vendorListInfinityScrollStatus from "./vendorListInfinityScrollStatus";
 import isScrollLoadingActive from "./scrollLoadingStatus";
+import searchedVendorList from "./searchedVendorList";
+import vendorListTotalNumber from "./vendorListTotalNumber";
 
 export default combineReducers({
   initialGeoLocation,
@@ -16,5 +18,7 @@ export default combineReducers({
   vendorListPageNumberStatus,
   vendorListDistance,
   vendorListInfinityScrollStatus,
-  isScrollLoadingActive
+  isScrollLoadingActive,
+  searchedVendorList,
+  vendorListTotalNumber
 });

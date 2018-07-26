@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { compose, withProps, withStateHandlers } from "recompose";
 import {
   withScriptjs,
@@ -37,7 +37,11 @@ const Map = compose(
   return (
     <Fragment>
       {props.initialGeoLocation && (
-        <GoogleMap defaultZoom={15} defaultCenter={{ lat, lng }}>
+        <GoogleMap
+          zoom={props.zoomLevel}
+          defaultZoom={14}
+          defaultCenter={{ lat, lng }}
+        >
           {props.isMarkerShown &&
             props.vendorList.map((vendor, index) => (
               <Marker

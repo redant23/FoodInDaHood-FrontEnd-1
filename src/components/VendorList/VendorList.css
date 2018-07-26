@@ -1,3 +1,7 @@
+.vendor-list {
+  margin-bottom: 60px;
+}
+
 .vendor-list-item {
   display: flex;
   align-items: center;

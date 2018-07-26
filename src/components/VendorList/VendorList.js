@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { getDistanceFromLatLonInKm } from "../../helpers/filterHelpers";
 import moment from "moment";
 import "./VendorList.css";
@@ -13,7 +13,7 @@ class VendorList extends Component {
     );
 
     return result < 1
-      ? parseInt(result * 1000) + "m"
+      ? parseInt(result * 1000, 10) + "m"
       : result.toFixed(1) + "km";
   }
 
@@ -49,11 +49,15 @@ class VendorList extends Component {
               <div className="vendor-list-title">
                 {index + 1 + ". " + vendor.title}
               </div>
-              <div className="vendor-list-food-categories">
-                <span>{vendor.food_categories[0]}</span>
-                <span>{vendor.food_categories[1]}</span>
-                <span>{vendor.food_categories[2]}</span>
-              </div>
+              {vendor.food_categories ? (
+                <div className="vendor-list-food-categories">
+                  <span>{vendor.food_categories[0]}</span>
+                  <span>{vendor.food_categories[1]}</span>
+                  <span>{vendor.food_categories[2]}</span>
+                </div>
+              ) : (
+                <div>준비중</div>
+              )}
               <div className="vendor-list-count">
                 <span>즐겨찾기: {vendor.favorites.length}</span>
                 <span>댓글: {vendor.comments.length}</span>
@@ -70,7 +74,7 @@ class VendorList extends Component {
               </div>
             </div>
             <div className="vendor-list-detail">
-              <div>강남역</div>
+              <div>{vendor.address.split(" ")[1]}</div>
               <div>
                 {this.getDistanceFromTheTarget(
                   vendor.lat,
@@ -89,21 +93,3 @@ class VendorList extends Component {
 }
 
 export default VendorList;
-
-// address: "서울특별시 서초구 양재동 316-10번지 양재시민의숲 3번출구 앞 ",
-// food_categories: [],
-// close_time: "2000-01-01T22:00:00Z",
-// comments: [],
-// description: "냠냠떡볶이입니다.",
-// favorites: [],
-// img_url:
-//   "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-// join_date: "2018-07-01T00:00:00Z",
-// lat: 37.280087722000005,
-// lng: 127.021962864,
-// menus: [],
-// open_time: "2000-01-01T09:30:00Z",
-// owner: "냠냠떡",
-// permission_no: "3210000-104-2017-00130",
-// tel: "010-5555-6666",
-// title: "냠냠떡볶이"

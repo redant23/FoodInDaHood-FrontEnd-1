@@ -1,0 +1,14 @@
+.search-bar {
+  text-align: center;
+  background-color: #E4E4E4;
+  height: 60px;
+  line-height: 60px;
+}
+
+.search-bar-input {
+  width: 90%;
+  height: 40px;
+  border: 1px solid black;
+  outline: none;
+  padding-left: 15px;
+}

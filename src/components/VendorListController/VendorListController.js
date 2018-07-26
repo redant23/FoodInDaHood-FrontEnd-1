@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import classNames from "classnames";
 import VendorList from "../VendorList/VendorList";
 import { getDistanceFromLatLonInKm } from "../../helpers/filterHelpers";
 import "./VendorListController.css";
@@ -32,27 +31,33 @@ class VendorListController extends Component {
   render() {
     return (
       <div className="filter-list-controller">
-        {this.props.vendorListFilterStatus.isByDistance && (
-          <VendorList
-            vendorList={this.filterByDistance(this.props.vendorList)}
-            initialGeoLocation={this.props.initialGeoLocation}
-            isScrollLoadingActive={this.props.isScrollLoadingActive}
-          />
-        )}
-        {this.props.vendorListFilterStatus.isByFavorite && (
-          <VendorList
-            vendorList={this.filterByFavorite(this.props.vendorList)}
-            initialGeoLocation={this.props.initialGeoLocation}
-            isScrollLoadingActive={this.props.isScrollLoadingActive}
-          />
-        )}
-        {this.props.vendorListFilterStatus.isByComment && (
-          <VendorList
-            vendorList={this.filterByComment(this.props.vendorList)}
-            initialGeoLocation={this.props.initialGeoLocation}
-            isScrollLoadingActive={this.props.isScrollLoadingActive}
-          />
-        )}
+        <div className="vendor-list-total-number">
+          <span>검색범위 내 푸드트럭 수 {`(${this.props.vendorListTotalNumber}) 개`}</span>
+        </div>
+        {this.props.vendorListFilterStatus.isByDistance &&
+          !!this.props.vendorList && (
+            <VendorList
+              vendorList={this.filterByDistance(this.props.vendorList)}
+              initialGeoLocation={this.props.initialGeoLocation}
+              isScrollLoadingActive={this.props.isScrollLoadingActive}
+            />
+          )}
+        {this.props.vendorListFilterStatus.isByFavorite &&
+          !!this.props.vendorList && (
+            <VendorList
+              vendorList={this.filterByFavorite(this.props.vendorList)}
+              initialGeoLocation={this.props.initialGeoLocation}
+              isScrollLoadingActive={this.props.isScrollLoadingActive}
+            />
+          )}
+        {this.props.vendorListFilterStatus.isByComment &&
+          !!this.props.vendorList && (
+            <VendorList
+              vendorList={this.filterByComment(this.props.vendorList)}
+              initialGeoLocation={this.props.initialGeoLocation}
+              isScrollLoadingActive={this.props.isScrollLoadingActive}
+            />
+          )}
       </div>
     );
   }

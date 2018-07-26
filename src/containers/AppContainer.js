@@ -19,7 +19,10 @@ import {
   stopVendorListInfinityScrollStatusAction,
   resumeVendorListInfinityScrollAction,
   activateScrollLoadingAction,
-  deactivateScrollLoadingAction
+  deactivateScrollLoadingAction,
+  updateSearchedVendorListAction,
+  resetSearchedVendorListAction,
+  updateVendorListTotalNumberAction
 } from "./../actions";
 
 let sampleData = [
@@ -314,7 +317,9 @@ const mapStateToProps = ({
   vendorListPageNumberStatus,
   vendorListDistance,
   vendorListInfinityScrollStatus,
-  isScrollLoadingActive
+  isScrollLoadingActive,
+  searchedVendorList,
+  vendorListTotalNumber
 }) => {
   return {
     initialGeoLocation,
@@ -324,7 +329,9 @@ const mapStateToProps = ({
     vendorListPageNumberStatus,
     vendorListDistance,
     vendorListInfinityScrollStatus,
-    isScrollLoadingActive
+    isScrollLoadingActive,
+    searchedVendorList,
+    vendorListTotalNumber
   };
 };
 
@@ -338,6 +345,8 @@ const mapDispatchToProps = dispatch => ({
     // var lat = geolocation.lat;
     // var lng = geolocation.lng;
 
+    // console.log(startIdx);
+    // console.log(endIdx);
     // dispatch(activateScrollLoadingAction());
 
     // if (isInProgress) {
@@ -348,12 +357,14 @@ const mapDispatchToProps = dispatch => ({
 
     // axios({
     //   method: "get",
-    //   url: `http://192.168.0.42:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
+    //   url: `http://192.168.55.4:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
     // }).then(res => {
+    //   debugger;
     //   isInProgress = false;
 
-    //   if (!!res.data.length) {
-    //     dispatch(updateVendorListAction(res.data));
+    //   if (!!res.data.vendorList.length) {
+    //     dispatch(updateVendorListAction(res.data.vendorList));
+    //     dispatch(updateVendorListTotalNumberAction(res.data.total));
     //     dispatch(updateVendorListPageStatusAction());
     //   } else {
     //     dispatch(stopVendorListInfinityScrollStatusAction());
@@ -363,17 +374,21 @@ const mapDispatchToProps = dispatch => ({
 
     setTimeout(() => {
       dispatch(updateVendorListAction(sampleData));
+      dispatch(updateVendorListTotalNumberAction(200));
     }, 2000);
   },
   updateFooterNavTapStatus: tapType => {
     if (tapType === "main-tap") {
       dispatch(setFooterNavTapStatusToMainAction());
+      dispatch(resetSearchedVendorListAction());
     } else if (tapType === "search-tap") {
       dispatch(setFooterNavTapStatusToSearchAction());
     } else if (tapType === "my-list") {
       dispatch(setFooterNavTapStatusToMyListAction());
+      dispatch(resetSearchedVendorListAction());
     } else if (tapType === "extra") {
       dispatch(setFooterNavTapStatusToExtraAction());
+      dispatch(resetSearchedVendorListAction());
     }
   },
   updateVendorListDistance: distance => {
@@ -400,6 +415,16 @@ const mapDispatchToProps = dispatch => ({
   },
   resumeVendorListInfinityScroll: () => {
     dispatch(resumeVendorListInfinityScrollAction());
+  },
+  _getVendorListSearchRequest: keyWord => {
+    dispatch(activateScrollLoadingAction());
+    axios({
+      method: "get",
+      url: `http://192.168.55.4:5000/api/vendor/vendor-search?keyword=${keyWord}`
+    }).then(res => {
+      dispatch(updateSearchedVendorListAction(res.data));
+      dispatch(deactivateScrollLoadingAction());
+    });
   }
 });
 

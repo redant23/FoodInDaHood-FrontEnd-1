@@ -6,23 +6,30 @@ class MapWrapper extends Component {
     super(props);
 
     this.state = {
-      isMarkerShown: false
+      isMarkerShown: true
     };
   }
 
   componentDidMount() {
-    this.delayedShowMarker();
+    // this.delayedShowMarker();
   }
 
-  delayedShowMarker = () => {
-    setTimeout(() => {
-      this.setState({ isMarkerShown: true });
-    }, 3000);
+  handleMarkerClick = () => {
+    //
   };
 
-  handleMarkerClick = () => {
-    this.setState({ isMarkerShown: false });
-    this.delayedShowMarker();
+  zoomLevelCalculator = distance => {
+    if (distance === 100) {
+      return 16;
+    } else if (distance === 500) {
+      return 15;
+    } else if (distance === 1000) {
+      return 14;
+    } else if (distance === 2000) {
+      return 13;
+    } else if (distance === 4000) {
+      return 12;
+    }
   };
 
   render() {
@@ -33,6 +40,7 @@ class MapWrapper extends Component {
           onMarkerClick={this.handleMarkerClick}
           initialGeoLocation={this.props.initialGeoLocation}
           vendorList={this.props.vendorList}
+          zoomLevel={this.zoomLevelCalculator(this.props.vendorListDistance)}
         />
       </Fragment>
     );

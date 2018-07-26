@@ -25,11 +25,11 @@
 }
 
 .filter-console-box.open {
-  height: 150px;
+  height: 100px;
 }
 
 .distance-selector {
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 
 .distance-selector > li {

@@ -1,19 +1,24 @@
 import React, { Component } from "react";
+import SearchBar from "../SearchBar/SearchBar";
+import VendorList from "../VendorList/VendorList";
 import "./SearchPage.css";
 
 class SearchPage extends Component {
+  handleChange(keyWord) {
+    this.props._getVendorListSearchRequest(keyWord);
+  }
+
   render() {
     return (
       <div className="search-page">
-        <div>
-          서치바
-        </div>
-        <div>
-          vendorlist
-        </div>
-        <div>
-          더보기
-        </div>
+        <SearchBar onChangeInput={this.handleChange.bind(this)} />
+        {this.props.initialGeoLocation &&
+          this.props.searchedVendorList && (
+            <VendorList
+              vendorList={this.props.searchedVendorList}
+              initialGeoLocation={this.props.initialGeoLocation}
+            />
+          )}
       </div>
     );
   }

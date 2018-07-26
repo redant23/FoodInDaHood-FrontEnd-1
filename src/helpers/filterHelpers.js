@@ -16,13 +16,3 @@ export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
-
-//바닐라코딩
-var lat1 = 37.5032;
-var lon1 = 127.0221;
-
-//강남역
-var lat2 = 37.497576;
-var lon2 = 127.0267734;
-
-// 37.497576, 127.0267734

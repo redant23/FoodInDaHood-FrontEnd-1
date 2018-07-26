@@ -14,44 +14,9 @@ class Main extends Component {
       tailing: false
     });
   }
+
   componentDidMount() {
-    var options = {
-      enableHighAccuracy: false,
-      timeout: 5000,
-      maximumAge: 0
-    };
-
-    function success(pos) {
-      var crd = pos.coords;
-
-      let initialGeoLocation = {
-        lat: crd.latitude,
-        lng: crd.longitude
-      };
-
-      var startIdx = this.props.vendorListPageNumberStatus.startIdx;
-      var endIdx = this.props.vendorListPageNumberStatus.endIdx;
-
-      this.props.updateInitialGeoLocation(initialGeoLocation);
-      this.props.getVendorList_API_Request(
-        initialGeoLocation,
-        500,
-        startIdx,
-        endIdx
-      );
-    }
-
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      success.bind(this),
-      error.bind(this),
-      options
-    );
-
-    window.addEventListener("scroll", this.handleScroll.bind(this));
+    window.addEventListener("scroll", this.handleScroll);
   }
 
   componentWillUnmount() {
@@ -80,8 +45,8 @@ class Main extends Component {
       this.props.getVendorList_API_Request(
         geoLocation,
         distance,
-        startIdx + 10,
-        endIdx + 10
+        startIdx,
+        endIdx
       );
     }
   }
@@ -108,6 +73,7 @@ class Main extends Component {
             isMarkerShown
             initialGeoLocation={this.props.initialGeoLocation}
             vendorList={this.props.vendorList}
+            vendorListDistance={this.props.vendorListDistance}
           />
           <FilterBox
             onDistanceClick={this.handleUpdateVendorListDistance.bind(this)}
@@ -120,6 +86,7 @@ class Main extends Component {
           {this.props.initialGeoLocation &&
             !!this.props.vendorList && (
               <VendorListController
+                vendorListTotalNumber={this.props.vendorListTotalNumber}
                 initialGeoLocation={this.props.initialGeoLocation}
                 vendorList={this.props.vendorList}
                 vendorListFilterStatus={this.props.vendorListFilterStatus}
@@ -127,9 +94,6 @@ class Main extends Component {
               />
             )}
         </div>
-        {this.props.isScrollLoadingActive && (
-          <div className="vendor-list-loading" />
-        )}
       </div>
     );
   }
