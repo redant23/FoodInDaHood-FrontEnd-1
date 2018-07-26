@@ -1,0 +1,17 @@
+.main-page {
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.vendor-list-loading {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 375px;
+  height: 667px;
+  text-align: center;
+  background: url("http://www.dynamocoop.be/wp-content/uploads/2015/10/spin.gif") no-repeat;
+  background-size: 50px 50px;
+  background-position: center;
+  background-color: rgba(255, 255, 255, 0.5);
+}

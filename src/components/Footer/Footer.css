@@ -1,0 +1,24 @@
+.main-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 376px;
+  height: 60px;
+  background: #F3F3F3;
+}
+
+.footer-nav {
+  display: flex;
+}
+
+.footer-nav > div {
+  flex-grow: 1;
+  line-height: 60px;
+  text-align: center;
+}
+
+.footer-nav > .highlight > span {
+  border: 1px solid #7171C3;
+  border-radius: 5px;
+  font-weight: 700;
+}

@@ -1,0 +1,59 @@
+.filter-box {
+  text-align: center;
+}
+
+.filter-box-btn-container {
+  background-color: #6882D6;
+  height: 30px;
+  line-height: 30px;
+}
+
+.filter-box-btn {
+  background-color: #6882D6;
+  border: none;
+}
+
+.filter-console-box {
+  background-color: #D0D4DF;
+  height: 0;
+  transition: 0.4s ease-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-console-box.open {
+  height: 150px;
+}
+
+.distance-selector {
+  margin-bottom: 15px;
+}
+
+.distance-selector > li {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.filter-selector > li {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.filter-distance.activated {
+  background-color: #6882D6;
+  color: #fff;
+}
+
+.filter-type.activated {
+  background-color: #6882D6;
+  color: #fff;
+}

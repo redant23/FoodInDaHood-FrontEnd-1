@@ -1,6 +1,90 @@
-import { INITAIL_SETTING } from "../constants";
+import {
+  INITIAL_GEOLOCATION,
+  UPDATE_VENDOR_LIST,
+  SET_MAIN_TAP,
+  SET_SEARCH_TAP,
+  SET_MY_LIST_TAP,
+  SET_EXTRA_TAP,
+  SET_FILTER_BY_DISTANCE,
+  SET_FILTER_BY_FAVORITE,
+  SET_FILTER_BY_COMMENT,
+  ADD_VENDOR_LIST_PAGE_NUMBER,
+  RESET_VENDOR_LIST_PAGE_NUMBER,
+  UPDATE_VENDOR_LIST_DISTANCE,
+  RESET_VENDOR_LIST,
+  STOP_VENDORLIST_INFINITY_SCROLL,
+  RESUME_VENDORLIST_INFINITY_SCROLL,
+  ACTIVATE_SCROLL_LOADING,
+  DE_ACTIVATE_SCROLL_LOADING
+} from "../constants";
 
-export const updateInitialSettingAction = test => ({
-  type: INITAIL_SETTING,
-  initialSetting: test
+export const updateInitialGeoLocationAction = initialGeoLocation => ({
+  type: INITIAL_GEOLOCATION,
+  initialGeoLocation
+});
+
+export const updateVendorListAction = vendorList => ({
+  type: UPDATE_VENDOR_LIST,
+  vendorList
+});
+
+export const setFooterNavTapStatusToMainAction = () => ({
+  type: SET_MAIN_TAP
+});
+
+export const setFooterNavTapStatusToSearchAction = () => ({
+  type: SET_SEARCH_TAP
+});
+
+export const setFooterNavTapStatusToMyListAction = () => ({
+  type: SET_MY_LIST_TAP
+});
+
+export const setFooterNavTapStatusToExtraAction = () => ({
+  type: SET_EXTRA_TAP
+});
+
+export const setVenderListFilterStatusToDistanceAction = () => ({
+  type: SET_FILTER_BY_DISTANCE
+});
+
+export const setVenderListFilterStatusToFavoriteAction = () => ({
+  type: SET_FILTER_BY_FAVORITE
+});
+
+export const setVenderListFilterStatusToCommentAction = () => ({
+  type: SET_FILTER_BY_COMMENT
+});
+
+export const updateVendorListPageStatusAction = () => ({
+  type: ADD_VENDOR_LIST_PAGE_NUMBER
+});
+
+export const resetVendorListPageStatusAction = () => ({
+  type: RESET_VENDOR_LIST_PAGE_NUMBER
+});
+
+export const updateVendorListDistanceAction = distance => ({
+  type: UPDATE_VENDOR_LIST_DISTANCE,
+  distance
+});
+
+export const resetVendorListAction = () => ({
+  type: RESET_VENDOR_LIST
+});
+
+export const stopVendorListInfinityScrollStatusAction = () => ({
+  type: STOP_VENDORLIST_INFINITY_SCROLL
+});
+
+export const resumeVendorListInfinityScrollAction = () => ({
+  type: RESUME_VENDORLIST_INFINITY_SCROLL
+});
+
+export const activateScrollLoadingAction = () => ({
+  type: ACTIVATE_SCROLL_LOADING
+});
+
+export const deactivateScrollLoadingAction = () => ({
+  type: DE_ACTIVATE_SCROLL_LOADING
 });

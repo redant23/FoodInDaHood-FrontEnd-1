@@ -1,0 +1,109 @@
+import React, { Component, Fragment } from "react";
+import { getDistanceFromLatLonInKm } from "../../helpers/filterHelpers";
+import moment from "moment";
+import "./VendorList.css";
+
+class VendorList extends Component {
+  getDistanceFromTheTarget(vendorLat, vendorLng, targetLat, targetLgn) {
+    var result = getDistanceFromLatLonInKm(
+      vendorLat,
+      vendorLng,
+      targetLat,
+      targetLgn
+    );
+
+    return result < 1
+      ? parseInt(result * 1000) + "m"
+      : result.toFixed(1) + "km";
+  }
+
+  render() {
+    function timeConvertor(time) {
+      return moment(time).format("LT");
+    }
+
+    function isOpen(open, close) {
+      var result = false;
+      var openHour = new Date(open).getHours();
+      var closeHour = new Date(close).getHours();
+      var currentHour = new Date().getHours();
+
+      if (currentHour > openHour && currentHour < closeHour) {
+        result = true;
+      }
+
+      return result;
+    }
+
+    let targetLat = this.props.initialGeoLocation.lat;
+    let targetLng = this.props.initialGeoLocation.lng;
+
+    return (
+      <ul className="vendor-list">
+        {this.props.vendorList.map((vendor, index) => (
+          <li className="vendor-list-item" key={index}>
+            <div className="vendor-list-img-wrapper">
+              <img className="vendor-list-img" src={vendor.img_url} alt="img" />
+            </div>
+            <div className="vendor-list-info">
+              <div className="vendor-list-title">
+                {index + 1 + ". " + vendor.title}
+              </div>
+              <div className="vendor-list-food-categories">
+                <span>{vendor.food_categories[0]}</span>
+                <span>{vendor.food_categories[1]}</span>
+                <span>{vendor.food_categories[2]}</span>
+              </div>
+              <div className="vendor-list-count">
+                <span>즐겨찾기: {vendor.favorites.length}</span>
+                <span>댓글: {vendor.comments.length}</span>
+              </div>
+              <div className="vendor-list-schedule">
+                <span>{timeConvertor(vendor.open_time.$date)}</span>
+                <span>{" - "}</span>
+                <span>{timeConvertor(vendor.close_time.$date)}</span>
+                {isOpen(vendor.open_time.$date, vendor.close_time.$date) ? (
+                  <span className="working-status open">OPEN</span>
+                ) : (
+                  <span className="working-status closed">CLOSED</span>
+                )}
+              </div>
+            </div>
+            <div className="vendor-list-detail">
+              <div>강남역</div>
+              <div>
+                {this.getDistanceFromTheTarget(
+                  vendor.lat,
+                  vendor.lng,
+                  targetLat,
+                  targetLng
+                )}
+              </div>
+              <div>81점</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+}
+
+export default VendorList;
+
+// address: "서울특별시 서초구 양재동 316-10번지 양재시민의숲 3번출구 앞 ",
+// food_categories: [],
+// close_time: "2000-01-01T22:00:00Z",
+// comments: [],
+// description: "냠냠떡볶이입니다.",
+// favorites: [],
+// img_url:
+//   "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
+// join_date: "2018-07-01T00:00:00Z",
+// lat: 37.280087722000005,
+// lng: 127.021962864,
+// menus: [],
+// open_time: "2000-01-01T09:30:00Z",
+// owner: "냠냠떡",
+// permission_no: "3210000-104-2017-00130",
+// tel: "010-5555-6666",
+// title: "냠냠떡볶이"

@@ -1,0 +1,46 @@
+.vendor-list-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #CBCBCB;
+}
+
+.vendor-list-item .vendor-list-img-wrapper {
+  flex-grow: 1
+}
+
+.vendor-list-item .vendor-list-info {
+  flex-grow: 8
+}
+
+.vendor-list-item .vendor-list-info > div {
+  margin-bottom: 5px;
+}
+
+.vendor-list-count span:nth-of-type(1) {
+  margin-right: 10px;
+}
+
+.vendor-list-item .vendor-list-detail {
+  flex-grow: 1
+}
+
+.vendor-list-item .vendor-list-detail > div {
+  margin-bottom: 5px;
+}
+
+.vendor-list-img {
+  height: 60px;
+  width: 60px;
+}
+
+.working-status.open{
+  margin-left: 5px;
+  border: 1px solid green;
+}
+
+.working-status.closed{
+  margin-left: 5px;
+  border: 1px solid red;
+}
+
