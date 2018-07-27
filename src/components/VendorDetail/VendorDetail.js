@@ -57,10 +57,6 @@ class VendorDetail extends Component {
       <div className="vendor-detail">
         {!!Object.keys(this.props.vendorDetailInfo).length && (
           <Fragment>
-            <Header
-              getBackBtnClick={this.handleGetBackBtnClick.bind(this)}
-              getBackBtn={true}
-            />
             <div className="vendor-detail-img-wrapper">
               <img src={vendor.img_url} alt="no-img" />
               <button className="direction-finder">찾아가기</button>

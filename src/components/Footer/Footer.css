@@ -11,7 +11,7 @@
   display: flex;
 }
 
-.footer-nav > div {
+.footer-nav > a {
   flex-grow: 1;
   line-height: 60px;
   text-align: center;

@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import "./MyListPage.css";
 
 class MyListPage extends Component {
-  handleChange(keyWord) {
-    this.props._getVendorListSearchRequest(keyWord);
-  }
-
   render() {
     return (
       <div className="my-list-page">
