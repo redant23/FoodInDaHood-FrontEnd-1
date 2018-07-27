@@ -16,3 +16,21 @@ export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 function deg2rad(deg) {
   return deg * (Math.PI / 180);
 }
+
+export function getDistanceFromTheTarget(
+  vendorLat,
+  vendorLng,
+  targetLat,
+  targetLgn
+) {
+  var result = getDistanceFromLatLonInKm(
+    vendorLat,
+    vendorLng,
+    targetLat,
+    targetLgn
+  );
+
+  return result < 1
+    ? parseInt(result * 1000, 10) + "m"
+    : result.toFixed(1) + "km";
+}

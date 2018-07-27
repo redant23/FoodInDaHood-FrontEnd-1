@@ -1,0 +1,110 @@
+.vendor-detail-img-wrapper {
+  position: relative;
+}
+
+.vendor-detail-img-wrapper > img{
+  width: 375px;
+  height: 250px;
+}
+
+.direction-finder {
+  position: absolute;
+  bottom: 8px;
+  right:  8px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #000000;
+  font-weight: 700;
+  border: none;
+  padding: 10px;
+}
+
+.vendor-detail-main-info {
+  display: flex;
+  padding: 20px 10px;
+  border-bottom: 1px solid #C2C2C2;
+}
+
+.vendor-detail-main-info-left {
+  flex-grow: 7;
+}
+
+.vendor-detail-main-info-right {
+  flex-grow: 3;
+}
+
+.vendor-detail-title {
+  font-size: 20px !important;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.vendor-detail-address {
+  margin-bottom: 5px;
+}
+
+.vendor-detail-working-hour {
+  margin-bottom: 5px;
+}
+
+.vendor-detail-rate {
+  font-size: 24px !important;
+  margin-bottom: 5px;
+}
+
+.vendor-detail-favorite-number {
+  font-size: 20px !important;
+  margin-bottom: 5px;
+}
+
+.vendor-detail-favorite-toggle-btn {
+}
+
+.vendor-detail-tap-box {
+  display: flex;
+  height: 40px;
+  border-bottom: 1px solid #C2C2C2;
+}
+
+.vendor-detail-tap-box > div {
+  font-size: 16px !important;
+  flex-grow: 1;
+  text-align: center;
+  line-height: 40px;
+  border-right: 1px solid #C2C2C2;
+}
+
+.vendor-detail-tap-box > div > span {
+  font-size: 16px !important;
+}
+
+.vendor-detail-tap-box > div:last-child {
+  border-right: none;
+}
+
+.vendor-detail-review-tap > span:nth-of-type(2) {
+  font-size: 14px !important;
+}
+
+.vendor-detail-menu-item {
+  display: flex;
+  padding: 5px;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.vendor-detail-menu-item-left {
+  flex-grow: 1;
+}
+
+.vendor-detail-menu-item-right {
+  flex-grow: 9;
+}
+
+.vendor-detail-menu-img {
+  width: 50px;
+  height: 50px;
+}
+
+.speacial-menu {
+  float: right;
+  color: red;
+}

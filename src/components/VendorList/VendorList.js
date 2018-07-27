@@ -1,47 +1,29 @@
 import React, { Component } from "react";
-import { getDistanceFromLatLonInKm } from "../../helpers/filterHelpers";
+import { Link } from "react-router-dom";
+import { getDistanceFromTheTarget } from "../../helpers/filterHelpers";
+import { timeConvertor, isOpen } from "../../helpers/timeHelpers";
 import moment from "moment";
 import "./VendorList.css";
 
 class VendorList extends Component {
-  getDistanceFromTheTarget(vendorLat, vendorLng, targetLat, targetLgn) {
-    var result = getDistanceFromLatLonInKm(
-      vendorLat,
-      vendorLng,
-      targetLat,
-      targetLgn
-    );
-
-    return result < 1
-      ? parseInt(result * 1000, 10) + "m"
-      : result.toFixed(1) + "km";
+  handleClick(ev) {
+    this.props.handleClick(ev.currentTarget.dataset.id);
   }
 
   render() {
-    function timeConvertor(time) {
-      return moment(time).format("LT");
-    }
-
-    function isOpen(open, close) {
-      var result = false;
-      var openHour = new Date(open).getHours();
-      var closeHour = new Date(close).getHours();
-      var currentHour = new Date().getHours();
-
-      if (currentHour > openHour && currentHour < closeHour) {
-        result = true;
-      }
-
-      return result;
-    }
-
     let targetLat = this.props.initialGeoLocation.lat;
     let targetLng = this.props.initialGeoLocation.lng;
 
     return (
       <ul className="vendor-list">
         {this.props.vendorList.map((vendor, index) => (
-          <li className="vendor-list-item" key={index}>
+          <Link
+            to={`/vendor/detail/${vendor._id}`}
+            className="vendor-list-item"
+            key={vendor._id}
+            data-id={vendor._id}
+            onClick={this.handleClick.bind(this)}
+          >
             <div className="vendor-list-img-wrapper">
               <img className="vendor-list-img" src={vendor.img_url} alt="img" />
             </div>
@@ -63,10 +45,10 @@ class VendorList extends Component {
                 <span>댓글: {vendor.comments.length}</span>
               </div>
               <div className="vendor-list-schedule">
-                <span>{timeConvertor(vendor.open_time.$date)}</span>
+                <span>{timeConvertor(vendor.open_time)}</span>
                 <span>{" - "}</span>
-                <span>{timeConvertor(vendor.close_time.$date)}</span>
-                {isOpen(vendor.open_time.$date, vendor.close_time.$date) ? (
+                <span>{timeConvertor(vendor.close_time)}</span>
+                {isOpen(vendor.open_time, vendor.close_time) ? (
                   <span className="working-status open">OPEN</span>
                 ) : (
                   <span className="working-status closed">CLOSED</span>
@@ -76,7 +58,7 @@ class VendorList extends Component {
             <div className="vendor-list-detail">
               <div>{vendor.address.split(" ")[1]}</div>
               <div>
-                {this.getDistanceFromTheTarget(
+                {getDistanceFromTheTarget(
                   vendor.lat,
                   vendor.lng,
                   targetLat,
@@ -85,7 +67,7 @@ class VendorList extends Component {
               </div>
               <div>81점</div>
             </div>
-          </li>
+          </Link>
         ))}
       </ul>
     );

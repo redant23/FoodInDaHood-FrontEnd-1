@@ -48,6 +48,7 @@ const Map = compose(
                 key={index}
                 position={{ lat: vendor.lat, lng: vendor.lng }}
                 onClick={props.onToggleOpen}
+                icon="https://process.filestackapi.com/AhTgLagciQByzXpFGRI0Az/resize=width:30/https://cdn.iconscout.com/public/images/icon/premium/png-512/food-truck-car-transport-machine-movement-transportation-3486058b4a238844-512x512.png"
               >
                 {props.isOpen && (
                   <InfoWindow onCloseClick={props.onToggleOpen}>

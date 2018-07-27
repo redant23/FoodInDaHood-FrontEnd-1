@@ -51,3 +51,8 @@ table {
 * {
   font-size: 12px !important;
 }
+
+a, a:visited {
+  text-decoration: none;
+  color: inherit;
+}

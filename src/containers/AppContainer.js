@@ -22,8 +22,50 @@ import {
   deactivateScrollLoadingAction,
   updateSearchedVendorListAction,
   resetSearchedVendorListAction,
-  updateVendorListTotalNumberAction
+  updateVendorListTotalNumberAction,
+  updateVendorDetailInfoAction,
+  updateVendorDetailIdAction,
+  setVendorDetailMenuTapStatusToMenuAction,
+  setVendorDetailMenuTapStatusToInfoAction,
+  setVendorDetailMenuTapStatusToReviewAction
 } from "./../actions";
+
+let vendorDetail = {
+  title: "이쁜할머니네",
+  description: "강남에서 분식을 파는 이쁜 할머니네입니다.",
+  img_url:
+    "http://post.phinf.naver.net/MjAxNzA5MTVfMTc5/MDAxNTA1NDQ4OTkzMjUx.XP04QQmxbSoikgFkYVae2VmxJPStnH5n9iXXYiMA4wQg.TjvU-bvEfIGhC01eK5i0PCrsMSnn23mJAQ5fWRE8FS4g.JPEG/IJ1388u-s6dyVx4IergBTV8bMHPc.jpg",
+  permission_no: "3000000-104-2017-00063",
+  address: "",
+  lat: 37.4982168,
+  lng: 127.0246351,
+  tel: "",
+  owner: "김복순",
+  join_date: "2018-08-01",
+  open_time: "09:30",
+  close_date: "22:00",
+  food_label: ["분식", "떡볶이", "순대"],
+  favorites: ["fb_Id"],
+  menus: [
+    {
+      menu_name: "떡볶이",
+      menu_price: "3,000원",
+      menu_description: "달달한 쌀떡볶이 입니다.",
+      menu_img_url: "http://img.com/img.png",
+      is_main_menu: true
+    }
+  ],
+  comments: [
+    {
+      comment_id: "_id",
+      comment_rate: 10,
+      comment_author: "불개미",
+      comment_body: "맛있어요, 양도 많구요, 튀김과의 조화가 환상적임",
+      comment_created_at: "2018-08-02 20:34",
+      comment_img_url: "http://comment.com/img.png"
+    }
+  ]
+};
 
 let sampleData = [
   {
@@ -319,7 +361,10 @@ const mapStateToProps = ({
   vendorListInfinityScrollStatus,
   isScrollLoadingActive,
   searchedVendorList,
-  vendorListTotalNumber
+  vendorListTotalNumber,
+  vendorDetailInfo,
+  vendorDetailId,
+  vendorDetailTapStatus
 }) => {
   return {
     initialGeoLocation,
@@ -331,7 +376,10 @@ const mapStateToProps = ({
     vendorListInfinityScrollStatus,
     isScrollLoadingActive,
     searchedVendorList,
-    vendorListTotalNumber
+    vendorListTotalNumber,
+    vendorDetailInfo,
+    vendorDetailId,
+    vendorDetailTapStatus
   };
 };
 
@@ -342,40 +390,39 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateInitialGeoLocationAction(initialGeoLocation));
   },
   getVendorList_API_Request: (geolocation, distance, startIdx, endIdx) => {
-    // var lat = geolocation.lat;
-    // var lng = geolocation.lng;
+    var lat = geolocation.lat;
+    var lng = geolocation.lng;
 
-    // console.log(startIdx);
-    // console.log(endIdx);
-    // dispatch(activateScrollLoadingAction());
+    console.log(startIdx);
+    console.log(endIdx);
+    dispatch(activateScrollLoadingAction());
 
-    // if (isInProgress) {
-    //   return;
-    // }
+    if (isInProgress) {
+      return;
+    }
 
-    // isInProgress = true;
+    isInProgress = true;
 
-    // axios({
-    //   method: "get",
-    //   url: `http://192.168.55.4:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
-    // }).then(res => {
-    //   debugger;
-    //   isInProgress = false;
+    axios({
+      method: "get",
+      url: `http://192.168.0.42:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
+    }).then(res => {
+      isInProgress = false;
 
-    //   if (!!res.data.vendorList.length) {
-    //     dispatch(updateVendorListAction(res.data.vendorList));
-    //     dispatch(updateVendorListTotalNumberAction(res.data.total));
-    //     dispatch(updateVendorListPageStatusAction());
-    //   } else {
-    //     dispatch(stopVendorListInfinityScrollStatusAction());
-    //   }
-    //   dispatch(deactivateScrollLoadingAction());
-    // });
+      if (!!res.data.vendorList.length) {
+        dispatch(updateVendorListAction(res.data.vendorList));
+        dispatch(updateVendorListTotalNumberAction(res.data.total));
+        dispatch(updateVendorListPageStatusAction());
+      } else {
+        dispatch(stopVendorListInfinityScrollStatusAction());
+      }
+      dispatch(deactivateScrollLoadingAction());
+    });
 
-    setTimeout(() => {
-      dispatch(updateVendorListAction(sampleData));
-      dispatch(updateVendorListTotalNumberAction(200));
-    }, 2000);
+    // setTimeout(() => {
+    //   dispatch(updateVendorListAction(sampleData));
+    //   dispatch(updateVendorListTotalNumberAction(200));
+    // }, 2000);
   },
   updateFooterNavTapStatus: tapType => {
     if (tapType === "main-tap") {
@@ -420,11 +467,37 @@ const mapDispatchToProps = dispatch => ({
     dispatch(activateScrollLoadingAction());
     axios({
       method: "get",
-      url: `http://192.168.55.4:5000/api/vendor/vendor-search?keyword=${keyWord}`
+      url: `http://192.168.0.42:5000/api/vendor/vendor-search?keyword=${keyWord}`
     }).then(res => {
       dispatch(updateSearchedVendorListAction(res.data));
       dispatch(deactivateScrollLoadingAction());
     });
+  },
+  updateVendorDetailId: vendorId => {
+    dispatch(updateVendorDetailIdAction(vendorId));
+  },
+  _getVendorDetailInfoRequest: vendorId => {
+    dispatch(activateScrollLoadingAction());
+    axios({
+      method: "get",
+      url: `http://192.168.0.42:5000/api/vendor/vendor-detail?vendorId=${vendorId}`
+    }).then(res => {
+      dispatch(updateVendorDetailInfoAction(res.data));
+      dispatch(deactivateScrollLoadingAction());
+    });
+
+    // setTimeout(() => {
+    //   dispatch(updateVendorDetailInfoAction(vendorDetail));
+    // }, 2000);
+  },
+  updateVendorDetailMenuTapStatus: tapType => {
+    if (tapType === "menu") {
+      dispatch(setVendorDetailMenuTapStatusToMenuAction());
+    } else if (tapType === "info") {
+      dispatch(setVendorDetailMenuTapStatusToInfoAction());
+    } else if (tapType === "review") {
+      dispatch(setVendorDetailMenuTapStatusToReviewAction());
+    }
   }
 });
 

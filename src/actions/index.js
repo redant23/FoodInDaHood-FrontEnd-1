@@ -18,7 +18,12 @@ import {
   DE_ACTIVATE_SCROLL_LOADING,
   UPDATE_SEARCHED_VENDOR_LIST,
   RESET_SEARCHED_VENDOR_LIST,
-  UPDATE_VENDOR_LIST_TOTAL_NUMBER
+  UPDATE_VENDOR_LIST_TOTAL_NUMBER,
+  UPDATE_VENDOR_DETAIL_INFO,
+  UPDATE_VENDOR_DETAIL_ID,
+  SET_VENDOR_DETAIL_STATUS_TAP_TO_MENU,
+  SET_VENDOR_DETAIL_STATUS_TAP_TO_INFO,
+  SET_VENDOR_DETAIL_STATUS_TAP_TO_REVIEW
 } from "../constants";
 
 export const updateInitialGeoLocationAction = initialGeoLocation => ({
@@ -104,4 +109,26 @@ export const resetSearchedVendorListAction = () => ({
 export const updateVendorListTotalNumberAction = totalNumber => ({
   type: UPDATE_VENDOR_LIST_TOTAL_NUMBER,
   totalNumber
+});
+
+export const updateVendorDetailInfoAction = vendorInfo => ({
+  type: UPDATE_VENDOR_DETAIL_INFO,
+  vendorInfo
+});
+
+export const updateVendorDetailIdAction = vendorId => ({
+  type: UPDATE_VENDOR_DETAIL_ID,
+  vendorId
+});
+
+export const setVendorDetailMenuTapStatusToMenuAction = () => ({
+  type: SET_VENDOR_DETAIL_STATUS_TAP_TO_MENU
+});
+
+export const setVendorDetailMenuTapStatusToInfoAction = () => ({
+  type: SET_VENDOR_DETAIL_STATUS_TAP_TO_INFO
+});
+
+export const setVendorDetailMenuTapStatusToReviewAction = () => ({
+  type: SET_VENDOR_DETAIL_STATUS_TAP_TO_REVIEW
 });

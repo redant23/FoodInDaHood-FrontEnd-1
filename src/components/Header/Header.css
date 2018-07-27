@@ -4,4 +4,19 @@
   height: 50px;
   text-align: center;
   line-height: 50px;
+  position: relative;
+}
+
+.get-back-btn {
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  height: 20px;
+  background: none;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+.main-title {
+  display: inline-block;
 }

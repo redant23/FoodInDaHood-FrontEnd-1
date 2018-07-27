@@ -8,6 +8,10 @@ class SearchPage extends Component {
     this.props._getVendorListSearchRequest(keyWord);
   }
 
+  handleClick(vendorId) {
+    this.props.updateVendorDetailId(vendorId);
+  }
+
   render() {
     return (
       <div className="search-page">
@@ -17,6 +21,7 @@ class SearchPage extends Component {
             <VendorList
               vendorList={this.props.searchedVendorList}
               initialGeoLocation={this.props.initialGeoLocation}
+              handleClick={this.handleClick.bind(this)}
             />
           )}
       </div>

@@ -28,6 +28,10 @@ class VendorListController extends Component {
     });
   }
 
+  handleClick(vendorId) {
+    this.props.updateVendorDetailId(vendorId);
+  }
+
   render() {
     return (
       <div className="filter-list-controller">
@@ -40,6 +44,7 @@ class VendorListController extends Component {
               vendorList={this.filterByDistance(this.props.vendorList)}
               initialGeoLocation={this.props.initialGeoLocation}
               isScrollLoadingActive={this.props.isScrollLoadingActive}
+              handleClick={this.handleClick.bind(this)}
             />
           )}
         {this.props.vendorListFilterStatus.isByFavorite &&
@@ -48,6 +53,7 @@ class VendorListController extends Component {
               vendorList={this.filterByFavorite(this.props.vendorList)}
               initialGeoLocation={this.props.initialGeoLocation}
               isScrollLoadingActive={this.props.isScrollLoadingActive}
+              handleClick={this.handleClick.bind(this)}
             />
           )}
         {this.props.vendorListFilterStatus.isByComment &&
@@ -56,6 +62,7 @@ class VendorListController extends Component {
               vendorList={this.filterByComment(this.props.vendorList)}
               initialGeoLocation={this.props.initialGeoLocation}
               isScrollLoadingActive={this.props.isScrollLoadingActive}
+              handleClick={this.handleClick.bind(this)}
             />
           )}
       </div>

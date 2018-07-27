@@ -68,32 +68,31 @@ class Main extends Component {
   render() {
     return (
       <div className="main-page">
-        <div>
-          <MapWrapper
-            isMarkerShown
-            initialGeoLocation={this.props.initialGeoLocation}
-            vendorList={this.props.vendorList}
-            vendorListDistance={this.props.vendorListDistance}
-          />
-          <FilterBox
-            onDistanceClick={this.handleUpdateVendorListDistance.bind(this)}
-            handleUpdateVendorListFilterStatus={this.handleUpdateVendorListFilterStatus.bind(
-              this
-            )}
-            vendorListDistance={this.props.vendorListDistance}
-            vendorListFilterStatus={this.props.vendorListFilterStatus}
-          />
-          {this.props.initialGeoLocation &&
-            !!this.props.vendorList && (
-              <VendorListController
-                vendorListTotalNumber={this.props.vendorListTotalNumber}
-                initialGeoLocation={this.props.initialGeoLocation}
-                vendorList={this.props.vendorList}
-                vendorListFilterStatus={this.props.vendorListFilterStatus}
-                isScrollLoadingActive={this.props.isScrollLoadingActive}
-              />
-            )}
-        </div>
+        <MapWrapper
+          isMarkerShown
+          initialGeoLocation={this.props.initialGeoLocation}
+          vendorList={this.props.vendorList}
+          vendorListDistance={this.props.vendorListDistance}
+        />
+        <FilterBox
+          onDistanceClick={this.handleUpdateVendorListDistance.bind(this)}
+          handleUpdateVendorListFilterStatus={this.handleUpdateVendorListFilterStatus.bind(
+            this
+          )}
+          vendorListDistance={this.props.vendorListDistance}
+          vendorListFilterStatus={this.props.vendorListFilterStatus}
+        />
+        {this.props.initialGeoLocation &&
+          !!this.props.vendorList && (
+            <VendorListController
+              vendorListTotalNumber={this.props.vendorListTotalNumber}
+              initialGeoLocation={this.props.initialGeoLocation}
+              vendorList={this.props.vendorList}
+              vendorListFilterStatus={this.props.vendorListFilterStatus}
+              isScrollLoadingActive={this.props.isScrollLoadingActive}
+              updateVendorDetailId={this.props.updateVendorDetailId}
+            />
+          )}
       </div>
     );
   }
