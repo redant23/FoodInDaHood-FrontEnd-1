@@ -4,6 +4,10 @@ import VendorList from "../VendorList/VendorList";
 import "./SearchPage.css";
 
 class SearchPage extends Component {
+  componentDidMount() {
+    this.props.updateFooterNavTapStatus("search-tap");
+  }
+
   handleChange(keyWord) {
     this.props._getVendorListSearchRequest(keyWord);
   }
@@ -15,7 +19,11 @@ class SearchPage extends Component {
   render() {
     return (
       <div className="search-page">
-        <SearchBar onChangeInput={this.handleChange.bind(this)} />
+        <SearchBar
+          onChangeInput={this.handleChange.bind(this)}
+          searchKeyWord={this.props.searchKeyWord}
+          updateSearchKeyWord={this.props.updateSearchKeyWord}
+        />
         {this.props.initialGeoLocation &&
           this.props.searchedVendorList && (
             <VendorList

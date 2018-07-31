@@ -1,92 +1,96 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import VendorList from "../VendorList/VendorList";
+import FacebookLogin from "react-facebook-login";
 import "./MyListPage.css";
 
 class MyListPage extends Component {
+  componentDidMount() {
+    if (this.props.isAuthenticated) {
+      this.props._getCustomerFavoriteListRequest(
+        this.props.authorizedUserData.userInfo._id
+      );
+    }
+
+    this.props.updateFooterNavTapStatus("my-list");
+  }
+
+  responseFacebook(response) {
+    this.props._userSignInSignUpRequest(response.accessToken);
+  }
+
+  handleClick(vendorId) {
+    this.props.updateVendorDetailId(vendorId);
+  }
+
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    if (nextProps.isAuthenticated && nextProps.myFavoriteList.length === 0) {
+      let userId = nextProps.authorizedUserData.userInfo._id;
+      nextProps._getCustomerFavoriteListRequest(userId);
+    }
+
+    return true;
+  }
+
   render() {
     return (
       <div className="my-list-page">
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem eum
-          necessitatibus minus reiciendis ut id molestiae nihil placeat
-          voluptate expedita, corporis fugit unde dolores reprehenderit iusto
-          quas, corrupti tempora velit! Lorem ipsum dolor sit amet consectetur
-          adipisicing elit. Voluptatem cum asperiores ex labore aut, rem ab sed
-          voluptatum nemo neque corporis obcaecati tempora nesciunt architecto
-          adipisci autem veniam. Eius provident doloribus ratione voluptatem.
-          Aspernatur adipisci odio expedita ipsa vitae alias eum mollitia nam
-          blanditiis, corporis laudantium, dolorum impedit molestiae ab
-          explicabo, dolores a ullam optio quasi minus assumenda sapiente
-          tempore. Recusandae rerum porro fugit numquam itaque dicta ipsa sequi
-          hic est laudantium vero autem deleniti excepturi architecto quae earum
-          aliquid, nemo possimus soluta reiciendis, labore enim rem repudiandae
-          ducimus! Alias nisi architecto fugit quae voluptates, necessitatibus
-          minima autem repellendus, iure dolor provident! Consectetur officiis
-          ratione voluptatibus pariatur mollitia hic voluptatem animi eius
-          incidunt praesentium atque debitis voluptas voluptatum ex similique,
-          enim alias laudantium nulla maxime magni? Magnam, debitis perferendis
-          ut commodi, adipisci velit, optio necessitatibus officia autem rerum
-          animi in? Maxime ea nesciunt aspernatur aperiam odit dicta, enim nisi
-          quisquam iste deleniti nostrum corrupti repudiandae nam. Esse tempora
-          officia, vel repudiandae dolorem exercitationem fuga doloribus autem
-          iusto quos dolor molestias tempore earum accusamus facere optio unde?
-          Doloribus provident architecto eos veritatis. Totam dolorem nam, non
-          quidem dolore maiores neque animi omnis nesciunt maxime architecto
-          magnam, ipsa iusto minus, quod quasi velit aut ex minima adipisci
-          corrupti. Dolorum ex commodi molestias impedit assumenda cupiditate
-          temporibus incidunt tempora! Reprehenderiminima autem repellendus,
-          iure dolor provident! Consectetur officiis ratione voluptatibus
-          pariatur mollitia hic voluptatem animi eius incidunt praesentium atque
-          debitis voluptas voluptatum ex similique, enim alias laudantium nulla
-          maxime magni? Magnam, debitis perferendis ut commodi, adipisci velit,
-          optio necessitatibus officia autem rerum animi in? Maxime ea nesciunt
-          aspernatur aperiam odit dicta, enim nisi quisquam iste deleniti
-          nostrum corrupti repudiandae nam. Esse tempora officia, vel
-          repudiandae dolorem exercitationem fuga doloribus autem iusto quos
-          dolor molestias tempore earum accusamus facere optio unde? Doloribus
-          provident architecto eos veritatis. Totam dolorem nam, non quidem
-          dolore maiores neque animi omnis nesciunt maxime architecto magnam,
-          ipsa iusto minus, quod quasi velit aut ex minima adipisci corrupti.
-          Dolorum ex commodi molestias impedit assumenda cupiditate temporibus
-          incidunt tempora! Reprehenderit illum laudantiminima autem
-          repellendus, iure dolor provident! Consectetur officiis ratione
-          voluptatibus pariatur mollitia hic voluptatem animi eius incidunt
-          praesentium atque debitis voluptas voluptatum ex similique, enim alias
-          laudantium nulla maxime magni? Magnam, debitis perferendis ut commodi,
-          adipisci velit, optio necessitatibus officia autem rerum animi in?
-          Maxime ea nesciunt aspernatur aperiam odit dicta, enim nisi quisquam
-          iste deleniti nostrum corrupti repudiandae nam. Esse tempora officia,
-          vel repudiandae dolorem exercitationem fuga doloribus autem iusto quos
-          dolor molestias tempore earum accusamus facere optio unde? Doloribus
-          provident architecto eos veritatis. Totam dolorem nam, non quidem
-          dolore maiores neque animi omnis nesciunt maxime architecto magnam,
-          ipsa iusto minus, quod quasi velit aut ex minima adipisci corrupti.
-          Dolorum ex commodi molestias impedit assumenda cupiditate temporibus
-          incidunt tempora! Reprehenderit illum laudantiminima autem
-          repellendus, iure dolor provident! Consectetur officiis ratione
-          voluptatibus pariatur mollitia hic voluptatem animi eius incidunt
-          praesentium atque debitis voluptas voluptatum ex similique, enim alias
-          laudantium nulla maxime magni? Magnam, debitis perferendis ut commodi,
-          adipisci velit, optio necessitatibus officia autem rerum animi in?
-          Maxime ea nesciunt aspernatur aperiam odit dicta, enim nisi quisquam
-          iste deleniti nostrum corrupti repudiandae nam. Esse tempora officia,
-          vel repudiandae dolorem exercitationem fuga doloribus autem iusto quos
-          dolor molestias tempore earum accusamus facere optio unde? Doloribus
-          provident architecto eos veritatis. Totam dolorem nam, non quidem
-          dolore maiores neque animi omnis nesciunt maxime architecto magnam,
-          ipsa iusto minus, quod quasi velit aut ex minima adipisci corrupti.
-          Dolorum ex commodi molestias impedit assumenda cupiditate temporibus
-          incidunt tempora! Reprehenderit illum laudantit illum laudantium velit
-          odit dolores, necessitatibus cupiditate doloremque unde accusantium
-          iste culpa, molestiae ad, ullam non aut obcaecati! Unde necessitatibus
-          reiciendis tempore. Culpa repudiandae ad rerum expedita eveniet
-          aliquid molestias eos, laborum quos quibusdam ea vitae aliquam nihil,
-          omnis id cupiditate tenetur blanditiis? Enim, sunt. Dolore sed
-          inventore repellat blanditiis. Inventore blanditiis sunt distinctio
-          impedit excepturi, nostrum ipsum, deserunt consequuntur ad facilis ex
-          consequatur suscipit dolore, optio fuga. Delectus, illum optio minus
-          autem iusto, natus, odit labore nam quia atque in voluptatem?
-          Consequatur!
-        </p>
+        {this.props.isAuthenticated ? (
+          <Fragment>
+            <div className="my-list-info">
+              <div className="my-list-img-wrapper">
+                <img
+                  className="my-list-img"
+                  src={this.props.authorizedUserData.userInfo.picture}
+                  alt="no-img"
+                />
+              </div>
+              <div className="my-list-info-detail">
+                <div className="my-list-name">
+                  {this.props.authorizedUserData.userInfo.username}
+                </div>
+                <div className="my-list-email">
+                  {this.props.authorizedUserData.userInfo.email}
+                </div>
+                <ul>
+                  {this.props.authorizedUserData.userInfo.comments.map(
+                    comment => (
+                      <li key={comment._id}>
+                        <div>{comment.vendor_id}</div>
+                        <div>{comment.img_url}</div>
+                        <div>{comment.rate}</div>
+                        <div>{comment.body}</div>
+                        <div>{comment.created_at}</div>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            </div>
+            <div className="my-list-favorite-trucks">
+              {this.props.myFavoriteList && (
+                <Fragment>
+                  <div>
+                    나의 즐겨찾는 트럭 수 :
+                    {this.props.myFavoriteList.length}
+                  </div>
+                  <VendorList
+                    vendorList={this.props.myFavoriteList}
+                    initialGeoLocation={this.props.initialGeoLocation}
+                    handleClick={this.handleClick.bind(this)}
+                  />
+                </Fragment>
+              )}
+            </div>
+          </Fragment>
+        ) : (
+          <FacebookLogin
+            appId="2171887249551647"
+            autoLoad={false}
+            fields="name,email,picture"
+            onClick={this.componentClicked}
+            callback={this.responseFacebook.bind(this)}
+          />
+        )}
       </div>
     );
   }

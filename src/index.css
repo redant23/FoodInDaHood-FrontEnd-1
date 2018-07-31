@@ -50,6 +50,7 @@ table {
 
 * {
   font-size: 12px !important;
+  box-sizing: border-box;
 }
 
 a, a:visited {

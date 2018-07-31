@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { getDistanceFromTheTarget } from "../../helpers/filterHelpers";
 import { timeConvertor, isOpen } from "../../helpers/timeHelpers";
-import moment from "moment";
 import "./VendorList.css";
 
 class VendorList extends Component {
@@ -31,15 +30,6 @@ class VendorList extends Component {
               <div className="vendor-list-title">
                 {index + 1 + ". " + vendor.title}
               </div>
-              {vendor.food_categories ? (
-                <div className="vendor-list-food-categories">
-                  <span>{vendor.food_categories[0]}</span>
-                  <span>{vendor.food_categories[1]}</span>
-                  <span>{vendor.food_categories[2]}</span>
-                </div>
-              ) : (
-                <div>준비중</div>
-              )}
               <div className="vendor-list-count">
                 <span>즐겨찾기: {vendor.favorites.length}</span>
                 <span>댓글: {vendor.comments.length}</span>
@@ -65,7 +55,6 @@ class VendorList extends Component {
                   targetLng
                 )}
               </div>
-              <div>81점</div>
             </div>
           </Link>
         ))}

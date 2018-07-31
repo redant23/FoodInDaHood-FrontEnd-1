@@ -42,6 +42,10 @@ const Map = compose(
           defaultZoom={14}
           defaultCenter={{ lat, lng }}
         >
+          <Marker
+            position={{ lat, lng }}
+            animation={window.google.maps.Animation.DROP}
+          />
           {props.isMarkerShown &&
             props.vendorList.map((vendor, index) => (
               <Marker

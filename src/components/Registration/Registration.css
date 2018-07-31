@@ -1,0 +1,57 @@
+.registration-page {
+  padding: 20px;
+  margin-bottom: 80px;
+}
+
+.form-title {
+  margin: auto;
+  text-align: center;
+  font-size: 28px !important;
+  margin-bottom: 20px;
+}
+
+.registration-form {
+  flex-direction: column;
+}
+
+.registration-form > div {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.registration-form > div > label > input,textarea {
+  margin-top: 5px;
+  width: 100%;
+}
+
+.label-name {
+  margin-right: 5px;
+}
+
+.menu-category-list {
+  border: 1px solid gray;
+  height: 300px;
+  padding: 10px;
+}
+
+.menu-category-list > span {
+  margin-right: 5px;
+  background: yellow;
+  border-radius: 5px;
+  padding: 5px;
+  line-height: 35px;
+}
+
+.menu-form {
+  border: 1px solid grey;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.menu-form > div {
+  display: block;
+}
+
+.menu-form > div > label > input,textarea{
+  width: 100%;
+}

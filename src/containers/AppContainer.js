@@ -27,329 +27,14 @@ import {
   updateVendorDetailIdAction,
   setVendorDetailMenuTapStatusToMenuAction,
   setVendorDetailMenuTapStatusToInfoAction,
-  setVendorDetailMenuTapStatusToReviewAction
+  setVendorDetailMenuTapStatusToReviewAction,
+  updateAthorizedUserInfoAction,
+  updateVendorCommentListAction,
+  updateMyFavoriteListAction,
+  addFavoriteInVendorDetailInfoAction,
+  removeFavoriteInVendorDetailInfoAction,
+  updateSearchKeywordAction
 } from "./../actions";
-
-let vendorDetail = {
-  title: "이쁜할머니네",
-  description: "강남에서 분식을 파는 이쁜 할머니네입니다.",
-  img_url:
-    "http://post.phinf.naver.net/MjAxNzA5MTVfMTc5/MDAxNTA1NDQ4OTkzMjUx.XP04QQmxbSoikgFkYVae2VmxJPStnH5n9iXXYiMA4wQg.TjvU-bvEfIGhC01eK5i0PCrsMSnn23mJAQ5fWRE8FS4g.JPEG/IJ1388u-s6dyVx4IergBTV8bMHPc.jpg",
-  permission_no: "3000000-104-2017-00063",
-  address: "",
-  lat: 37.4982168,
-  lng: 127.0246351,
-  tel: "",
-  owner: "김복순",
-  join_date: "2018-08-01",
-  open_time: "09:30",
-  close_date: "22:00",
-  food_label: ["분식", "떡볶이", "순대"],
-  favorites: ["fb_Id"],
-  menus: [
-    {
-      menu_name: "떡볶이",
-      menu_price: "3,000원",
-      menu_description: "달달한 쌀떡볶이 입니다.",
-      menu_img_url: "http://img.com/img.png",
-      is_main_menu: true
-    }
-  ],
-  comments: [
-    {
-      comment_id: "_id",
-      comment_rate: 10,
-      comment_author: "불개미",
-      comment_body: "맛있어요, 양도 많구요, 튀김과의 조화가 환상적임",
-      comment_created_at: "2018-08-02 20:34",
-      comment_img_url: "http://comment.com/img.png"
-    }
-  ]
-};
-
-let sampleData = [
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812c4"
-    },
-    favorites: ["dummy", "dummy", "dummy", "dummy", "dummy"],
-    title: "냠냠쩝쩝",
-    permission_no: "3180000-104-2016-00289",
-    address: "강원도 평창군 대관령면 사부랑길 62-2 (대관령눈꽃축제장)",
-    lat: 37.5032,
-    lng: 127.0221,
-    tel: "010-5555-6666",
-    description: "냠냠쩝쩝입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T19:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T03:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "냠냠쩝",
-    menus: [],
-    comments: [
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy"
-    ],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  },
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812c5"
-    },
-    favorites: ["dummy", "dummy", "dummy", "dummy", "dummy"],
-    title: "닥가게(80로4845)",
-    permission_no: "3130000-104-2016-00325",
-    address: "서울특별시 마포구 월드컵로 243-48 (성산동 평화의공원내)",
-    lat: 37.497576,
-    lng: 127.0267734,
-    tel: "010-5555-6666",
-    description: "닥가게(80로4845)입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T15:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T00:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "닥가게",
-    menus: [],
-    comments: ["dummy", "dummy", "dummy", "dummy", "dummy"],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  },
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812c6"
-    },
-    favorites: [
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy"
-    ],
-    title: "슈퍼스트라이크",
-    permission_no: "3180000-104-2016-00322",
-    address: "서울특별시 영등포구 여의동로 343 (여의도동 (98러2576))",
-    lat: 37.52708506111111,
-    lng: 126.9328642388889,
-    tel: "010-5555-6666",
-    description: "슈퍼스트라이크입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T15:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T00:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "슈퍼스",
-    menus: [],
-    comments: ["dummy", "dummy", "dummy", "dummy", "dummy", "dummy"],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  },
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812c7"
-    },
-    favorites: ["dummy", "dummy", "dummy", "dummy", "dummy"],
-    title: "국가대표 트럭",
-    permission_no: "3030000-104-2016-00135",
-    address: "서울특별시 성동구 왕십리로 222 1층 (사근동 한양대학교 생활과학대학교앞(92주6464))",
-    lat: 37.560426288888884,
-    lng: 127.04991699444444,
-    tel: "010-5555-6666",
-    description: "국가대표 트럭입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T15:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T00:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "국가대",
-    menus: [],
-    comments: ["dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy"],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  },
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812c9"
-    },
-    favorites: [0, 1, 2, 3, 4, 5, 6, 7],
-    title: "냠냠떡볶이",
-    permission_no: "3210000-104-2017-00130",
-    address: "서울특별시 서초구 양재동 316-10번지 양재시민의숲 3번출구 앞 ",
-    lat: 37.466910338888894,
-    lng: 127.03878573333333,
-    tel: "010-5555-6666",
-    description: "냠냠떡볶이입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T15:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T00:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "냠냠떡",
-    menus: [],
-    comments: [
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy"
-    ],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  },
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812c8"
-    },
-    favorites: [0, 1, 2, 3, 4, 5],
-    title: "착햄",
-    permission_no: "3180000-104-2017-00101",
-    address: "서울특별시 영등포구 여의도동 86-7번지 여의도한강공원민속놀이마당(83모7926) ",
-    lat: 37.51844248611111,
-    lng: 126.94111170277777,
-    tel: "010-5555-6666",
-    description: "착햄입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T15:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T00:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "착햄",
-    menus: [],
-    comments: ["dummy", "dummy"],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  },
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812ca"
-    },
-    favorites: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    title: "팬더그릴(Pan the grill)",
-    permission_no: "3180000-104-2017-00059",
-    address: "서울특별시 영등포구 여의동로 330 (여의도동 물빛광장(89모1083))",
-    lat: 37.52634778888889,
-    lng: 126.93359546111111,
-    tel: "010-5555-6666",
-    description: "팬더그릴(Pan the grill)입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T15:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T00:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "팬더그",
-    menus: [],
-    comments: ["dummy"],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  },
-  {
-    _id: {
-      $oid: "5b571a30885f9e2a746812cd"
-    },
-    favorites: [0, 1, 2, 3, 4],
-    title: "톡투미다밥협동조합",
-    permission_no: "3180000-104-2017-00063",
-    address: "서울특별시 영등포구 여의동로 330 (여의도동 물빛광장94보4365)",
-    lat: 37.52634778888889,
-    lng: 126.93359546111111,
-    tel: "070-7784-7579",
-    description: "톡투미다밥협동조합입니다.",
-    img_url:
-      "https://blog.hmgjournal.com/upload/common/activeSquare/binary/201507021509230_KMPGOPJR.jpg",
-    join_date: {
-      $date: "2018-07-31T15:00:00.000Z"
-    },
-    open_time: {
-      $date: "2000-01-01T00:30:00.000Z"
-    },
-    close_time: {
-      $date: "2000-01-01T13:00:00.000Z"
-    },
-    owner: "톡투미",
-    menus: [],
-    comments: [
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy",
-      "dummy"
-    ],
-    food_categories: ["초밥, 연어, 참치"],
-    __v: 0
-  }
-];
 
 const mapStateToProps = ({
   initialGeoLocation,
@@ -364,7 +49,11 @@ const mapStateToProps = ({
   vendorListTotalNumber,
   vendorDetailInfo,
   vendorDetailId,
-  vendorDetailTapStatus
+  vendorDetailTapStatus,
+  authorizedUserData,
+  vendorCommentList,
+  myFavoriteList,
+  searchKeyWord
 }) => {
   return {
     initialGeoLocation,
@@ -379,7 +68,12 @@ const mapStateToProps = ({
     vendorListTotalNumber,
     vendorDetailInfo,
     vendorDetailId,
-    vendorDetailTapStatus
+    vendorDetailTapStatus,
+    authorizedUserData,
+    vendorCommentList,
+    myFavoriteList,
+    searchKeyWord,
+    isAuthenticated: authorizedUserData.isAuthenticated
   };
 };
 
@@ -465,9 +159,11 @@ const mapDispatchToProps = dispatch => ({
   },
   _getVendorListSearchRequest: keyWord => {
     dispatch(activateScrollLoadingAction());
+    let encodedKeyWord = encodeURI(keyWord);
+
     axios({
       method: "get",
-      url: `http://192.168.0.42:5000/api/vendor/vendor-search?keyword=${keyWord}`
+      url: `http://192.168.0.42:5000/api/vendor/vendor-search?keyword=${encodedKeyWord}`
     }).then(res => {
       dispatch(updateSearchedVendorListAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -485,10 +181,6 @@ const mapDispatchToProps = dispatch => ({
       dispatch(updateVendorDetailInfoAction(res.data));
       dispatch(deactivateScrollLoadingAction());
     });
-
-    // setTimeout(() => {
-    //   dispatch(updateVendorDetailInfoAction(vendorDetail));
-    // }, 2000);
   },
   updateVendorDetailMenuTapStatus: tapType => {
     if (tapType === "menu") {
@@ -498,6 +190,125 @@ const mapDispatchToProps = dispatch => ({
     } else if (tapType === "review") {
       dispatch(setVendorDetailMenuTapStatusToReviewAction());
     }
+  },
+  _userSignInSignUpRequest: accessToken => {
+    const tokenBlob = new Blob(
+      [JSON.stringify({ access_token: accessToken }, null, 2)],
+      { type: "application/json" }
+    );
+
+    const options = {
+      method: "POST",
+      body: tokenBlob,
+      mode: "cors",
+      cache: "default"
+    };
+
+    fetch("http://192.168.0.42:5000/api/auth/facebook", options).then(r => {
+      if (r.status !== 500) {
+        r.json().then(data => {
+          localStorage.setItem("x-auth-token", data.token);
+          localStorage.setItem("x-auth-facebook-token", accessToken);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${data.token}`;
+          axios.defaults.headers.post["Content-Type"] =
+            "application/x-www-form-urlencoded";
+          if (data.token) {
+            dispatch(
+              updateAthorizedUserInfoAction({
+                userInfo: data.user,
+                userToken: data.token
+              })
+            );
+          }
+        });
+      }
+    });
+  },
+  _updateUserCommentRequest: (vendorId, userInfo, commentInfo) => {
+    let userId = userInfo._id;
+    let userName = userInfo.username;
+    let userImg = userInfo.picture;
+
+    let formData = new FormData();
+
+    formData.append("vendor_id", vendorId);
+    formData.append("customer_id", userId);
+    formData.append("customer_name", userName);
+    formData.append("customer_imgUrl", userImg);
+    formData.append("comment_rate", commentInfo.rate);
+    formData.append("comment_content", commentInfo.value);
+    formData.append("comment_img", commentInfo.image);
+    formData.append("created_at", new Date());
+
+    return fetch("http://192.168.0.42:5000/api/comment/new", {
+      method: "POST",
+      body: formData
+    });
+  },
+  _getVendorCommentListRequest: vendorId => {
+    axios({
+      method: "get",
+      url: `http://192.168.0.42:5000/api/comment/list?vendorId=${vendorId}`
+    }).then(res => {
+      dispatch(updateVendorCommentListAction(res.data));
+    });
+
+    axios({
+      method: "get",
+      url: `http://192.168.0.42:5000/api/vendor/vendor-detail?vendorId=${vendorId}`
+    }).then(res => {
+      dispatch(updateVendorDetailInfoAction(res.data));
+      dispatch(deactivateScrollLoadingAction());
+    });
+  },
+  _addFavoriteRequest: (vendorId, customerId) => {
+    console.log(vendorId, customerId, "add");
+    dispatch(activateScrollLoadingAction());
+    let data = {
+      vendorId,
+      customerId
+    };
+    axios({
+      method: "POST",
+      url: `http://192.168.0.42:5000/api/favorite/add`,
+      data
+    }).then(() => {
+      dispatch(addFavoriteInVendorDetailInfoAction(customerId));
+      dispatch(deactivateScrollLoadingAction());
+    });
+  },
+  _removeFavoriteRequest: (vendorId, customerId) => {
+    dispatch(activateScrollLoadingAction());
+    console.log(vendorId, customerId, "remove");
+    let data = {
+      vendorId,
+      customerId
+    };
+
+    axios({
+      method: "POST",
+      url: `http://192.168.0.42:5000/api/favorite/remove`,
+      data
+    }).then(() => {
+      dispatch(removeFavoriteInVendorDetailInfoAction(customerId));
+      dispatch(deactivateScrollLoadingAction());
+    });
+  },
+  _getCustomerFavoriteListRequest: customerId => {
+    console.log(customerId);
+    dispatch(activateScrollLoadingAction());
+    axios({
+      method: "GET",
+      url: `http://192.168.0.42:5000/api/customer/myfavoritetrucks?customerId=${customerId}`
+    }).then(res => {
+      dispatch(updateMyFavoriteListAction(res.data));
+      dispatch(deactivateScrollLoadingAction());
+    });
+  },
+  updateSearchKeyWord: foodName => {
+    dispatch(updateSearchKeywordAction(foodName));
   }
 });
 

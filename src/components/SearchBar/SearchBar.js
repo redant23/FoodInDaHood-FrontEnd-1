@@ -12,6 +12,7 @@ class SearchBar extends Component {
   handleChangeWithPersist(ev) {
     ev.persist();
     this.handleChange(ev);
+    this.props.updateSearchKeyWord(ev.target.value);
   }
 
   handleChange(ev) {
@@ -24,6 +25,7 @@ class SearchBar extends Component {
     return (
       <div className="search-bar">
         <input
+          value={this.props.searchKeyWord}
           className="search-bar-input"
           onChange={this.handleChangeWithPersist.bind(this)}
           type="text"

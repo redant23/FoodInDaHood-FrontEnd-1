@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from "react";
+import Rate from "rc-rate";
+import FacebookLogin from "react-facebook-login";
+import { Link } from "react-router-dom";
 import { timeConvertor, isOpen } from "../../helpers/timeHelpers";
 import { getDistanceFromTheTarget } from "../../helpers/filterHelpers";
-import Header from "../Header/Header";
 import {
   withScriptjs,
   withGoogleMap,
@@ -9,6 +11,7 @@ import {
   Marker
 } from "react-google-maps";
 import "./VendorDetail.css";
+import "./rc-rate.css";
 
 const SimpleMap = withScriptjs(
   withGoogleMap(props => {
@@ -26,8 +29,19 @@ const SimpleMap = withScriptjs(
 );
 
 class VendorDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: "",
+      rate: 3,
+      image: null,
+      isChecked: false
+    };
+  }
+
   componentDidMount() {
     this.props._getVendorDetailInfoRequest(this.props.vendorDetailId);
+    this.props._getVendorCommentListRequest(this.props.vendorDetailId);
   }
 
   handleGetBackBtnClick() {
@@ -46,11 +60,85 @@ class VendorDetail extends Component {
     }
   }
 
+  handleFavoriteClick(ev) {
+    let vendorId = this.props.vendorDetailId;
+    let customerId = this.props.authorizedUserData.userInfo._id;
+
+    if (ev.target.checked) {
+      this.props._addFavoriteRequest(vendorId, customerId);
+    } else {
+      this.props._removeFavoriteRequest(vendorId, customerId);
+    }
+  }
+
+  handleChange(ev) {
+    this.setState({ value: ev.target.value });
+  }
+
+  handleImageChange(ev) {
+    let image = ev.target.files[0];
+    this.setState({ image });
+  }
+
+  handleStarChange(star) {
+    this.setState({ rate: star });
+  }
+
+  handleSubmit(ev) {
+    ev.preventDefault();
+    this.props
+      ._updateUserCommentRequest(
+        this.props.vendorDetailId,
+        this.props.authorizedUserData.userInfo,
+        this.state
+      )
+      .then(res => res.json())
+      .then(res => {
+        console.log(res.msg);
+        this.setState({
+          value: "",
+          rate: 3,
+          image: null
+        });
+        this.props._getVendorCommentListRequest(this.props.vendorDetailId);
+      });
+  }
+
+  handleSearchKeywordClick(foodname) {
+    this.props.updateSearchKeyWord(foodname);
+  }
+
+  responseFacebook(response) {
+    this.props._userSignInSignUpRequest(response.accessToken);
+  }
+
   render() {
     if (this.props.initialGeoLocation) {
       var vendor = this.props.vendorDetailInfo;
       var targetLat = this.props.initialGeoLocation.lat;
       var targetLng = this.props.initialGeoLocation.lng;
+    }
+
+    var isFavorite = false;
+    if (
+      this.props.isAuthenticated &&
+      !!Object.keys(this.props.vendorDetailInfo).length
+    ) {
+      isFavorite = !!this.props.vendorDetailInfo.favorites.find(
+        customerId =>
+          customerId._id === this.props.authorizedUserData.userInfo._id
+      );
+    }
+
+    var rateAvg = 0;
+
+    if (this.props.vendorCommentList.length && !rateAvg) {
+      var sum = 0;
+      this.props.vendorCommentList.forEach(item => {
+        sum += item.rate;
+      });
+
+      rateAvg = sum / this.props.vendorCommentList.length;
     }
 
     return (
@@ -59,7 +147,13 @@ class VendorDetail extends Component {
           <Fragment>
             <div className="vendor-detail-img-wrapper">
               <img src={vendor.img_url} alt="no-img" />
-              <button className="direction-finder">찾아가기</button>
+              <a
+                href={`https://www.google.com/maps?saddr=${targetLat},${targetLng}&daddr=${vendor.lat},${vendor.lng}`}
+                className="direction-finder"
+                target="_blank"
+              >
+                찾아가기
+              </a>
             </div>
             <div className="vendor-detail-main-info">
               <div className="vendor-detail-main-info-left">
@@ -85,18 +179,44 @@ class VendorDetail extends Component {
                   )}
                 </div>
                 <div className="vendor-detail-food-category">
-                  {`${vendor.food_categories[0]},
-                  ${vendor.food_categories[1]},
-                  ${vendor.food_categories[2]}`}
+                  {vendor.food_categories_info.map(categoryInfo => (
+                    <Link
+                      to="/search"
+                      onClick={this.handleSearchKeywordClick.bind(
+                        this,
+                        categoryInfo.foodname
+                      )}
+                      key={categoryInfo._id}
+                    >
+                      <span className="food-catetory-info">
+                        {categoryInfo.foodname}
+                      </span>
+                    </Link>
+                  ))}
                 </div>
               </div>
               <div className="vendor-detail-main-info-right">
-                <div className="vendor-detail-rate">{vendor.rate}</div>
+                <div className="vendor-detail-rate">
+                  평점: {rateAvg} 점
+                  <Rate
+                    className="comment-form-rate"
+                    defaultValue={rateAvg}
+                    character={<i className="anticon anticon-star" />}
+                    allowHalf={true}
+                  />
+                </div>
                 <div className="vendor-detail-favorite-number">
-                  {vendor.favorites.length}
+                  즐겨찾기 갯수: {vendor.favorites.length}
                 </div>
                 <div className="vendor-detail-favorite-toggle-btn">
-                  <div>북마크</div>
+                  {this.props.isAuthenticated ? (
+                    <input
+                      type="checkbox"
+                      id="myCheck"
+                      onChange={this.handleFavoriteClick.bind(this)}
+                      checked={isFavorite}
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -143,6 +263,8 @@ class VendorDetail extends Component {
                           <div className="speacial-menu">*추천메뉴</div>
                         </li>
                       );
+                    } else {
+                      return null;
                     }
                   })}
                   {vendor.menus.map(menu => {
@@ -163,6 +285,8 @@ class VendorDetail extends Component {
                           </div>
                         </li>
                       );
+                    } else {
+                      return null;
                     }
                   })}
                 </ul>
@@ -196,7 +320,88 @@ class VendorDetail extends Component {
                 </div>
               )}
               {this.props.vendorDetailTapStatus.reviewTap && (
-                <div className="vendor-detail-body-review">this is review</div>
+                <div className="vendor-detail-body-review">
+                  {this.props.isAuthenticated ? (
+                    <form
+                      className="comment-form"
+                      onSubmit={this.handleSubmit.bind(this)}
+                    >
+                      <div className="comment-form-title">
+                        <span>
+                          {this.props.authorizedUserData.userInfo.username}
+                        </span>
+                        <span>님, 여기 푸드트럭은 어땠나요?</span>
+                      </div>
+                      <Rate
+                        className="comment-form-rate"
+                        defaultValue={3}
+                        onChange={this.handleStarChange.bind(this)}
+                        character={<i className="anticon anticon-star" />}
+                        allowHalf={true}
+                      />
+                      <textarea
+                        className="comment-form-content"
+                        value={this.state.value}
+                        onChange={this.handleChange.bind(this)}
+                        type="text"
+                      />
+                      <input
+                        className="comment-form-img-upload"
+                        type="file"
+                        name="pic"
+                        accept="image/*"
+                        onChange={this.handleImageChange.bind(this)}
+                      />
+                      <input
+                        className="comment-form-btn"
+                        type="submit"
+                        value="댓글달기"
+                      />
+                    </form>
+                  ) : (
+                    <div className="review-login-btn">
+                      <FacebookLogin
+                        appId="2171887249551647"
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        onClick={this.componentClicked}
+                        callback={this.responseFacebook.bind(this)}
+                      />
+                    </div>
+                  )}
+                  <ul className="comment-list">
+                    {this.props.vendorCommentList.map(comment => (
+                      <li key={comment._id} className="comment-item">
+                        <div className="comment-info">
+                          <div className="user-img-wrapper">
+                            <img
+                              className="user-img"
+                              src={comment.customer_imgUrl}
+                              alt="no-img"
+                            />
+                          </div>
+                          <div className="comment-info-detail">
+                            <h1 className="comment-user-name">
+                              {comment.customer_name}
+                            </h1>
+                            <Rate
+                              className="comment-rate"
+                              defaultValue={comment.rate}
+                              character={<i className="anticon anticon-star" />}
+                            />
+                            <div className="comment-date">
+                              {comment.created_at}
+                            </div>
+                          </div>
+                        </div>
+                        <p className="comment-content">{comment.body}</p>
+                        <div className="comment-img">
+                          <img src={comment.img_url} alt="no-img" />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </div>
           </Fragment>
@@ -207,61 +412,3 @@ class VendorDetail extends Component {
 }
 
 export default VendorDetail;
-
-// description
-// :
-// "떡볶이 1인분, 맵기 조절가능합니다"
-// img_url
-// :
-// "http://pds25.egloos.com/pds/201212/27/12/c0055612_50dc4c85302b9.jpg"
-// name
-// :
-// "떡볶이"
-// price
-// :
-// "3000"
-// _id
-// :
-// "5b597656708af066702f5d34"
-
-// {
-//   "title": "이쁜할머니네",
-//   "description": "강남에서 분식을 파는 이쁜 할머니네입니다.",
-//   "img_url": "http://prettygrandma.com/img.png",
-//   "permission_no": "3000000-104-2017-00063",
-//   "address": "",
-//   "location_x": 37.4982168,
-//   "location_y": 127.0246351,
-//   "tel": "",
-//   "owner": "김복순",
-//   "join_date": "2018-08-01",
-//   "open_time": "09:30",
-//   "close_date": "22:00",
-//   "food_label": [
-//     "분식",
-//     "떡볶이",
-//     "순대"
-//   ],
-//   "favorites": [
-//     "fb_Id"
-//   ],
-//   "menus": [
-//     {
-//       "menu_name": "떡볶이",
-//       "menu_price": "3,000원",
-//       "menu_description": "달달한 쌀떡볶이 입니다.",
-//       "menu_img_url": "http://img.com/img.png",
-//       "is_main_menu": true
-//     }
-//   ],
-//   "comments": [
-//     {
-//       "comment_id": "_id",
-//       "comment_rate": 10,
-//       "comment_author": "불개미",
-//       "comment_body": "맛있어요, 양도 많구요, 튀김과의 조화가 환상적임",
-//       "comment_created_at": "2018-08-02 20:34",
-//       "comment_img_url": "http://comment.com/img.png"
-//     }
-//   ]
-// }

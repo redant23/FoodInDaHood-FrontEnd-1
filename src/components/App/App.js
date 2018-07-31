@@ -1,13 +1,12 @@
-import React, { Component, Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
-import MainLoadingPage from "../MainLoadingPage/MainLoadingPage";
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import VendorDetail from "../VendorDetail/VendorDetail";
 import SearchPage from "../SearchPage/SearchPage";
 import MyListPage from "../MyListPage/MyListPage";
-import EventPage from "../EventPage/EventPage";
 import Footer from "../Footer/Footer";
+import Registration from "../Registration/Registration";
 
 import "./App.css";
 
@@ -50,6 +49,9 @@ class App extends Component {
       error.bind(this),
       options
     );
+
+    // var facebookToken = localStorage.getItem("x-auth-facebook-token");
+    // this.props._userSignInSignUpRequest(facebookToken);
   }
 
   render() {
@@ -72,6 +74,17 @@ class App extends Component {
                 }
                 vendorDetailTapStatus={this.props.vendorDetailTapStatus}
                 initialGeoLocation={this.props.initialGeoLocation}
+                isAuthenticated={this.props.isAuthenticated}
+                _userSignInSignUpRequest={this.props._userSignInSignUpRequest}
+                _updateUserCommentRequest={this.props._updateUserCommentRequest}
+                authorizedUserData={this.props.authorizedUserData}
+                _getVendorCommentListRequest={
+                  this.props._getVendorCommentListRequest
+                }
+                vendorCommentList={this.props.vendorCommentList}
+                _addFavoriteRequest={this.props._addFavoriteRequest}
+                _removeFavoriteRequest={this.props._removeFavoriteRequest}
+                updateSearchKeyWord={this.props.updateSearchKeyWord}
               />
             );
           }}
@@ -109,6 +122,7 @@ class App extends Component {
                 }
                 vendorListTotalNumber={this.props.vendorListTotalNumber}
                 updateVendorDetailId={this.props.updateVendorDetailId}
+                updateFooterNavTapStatus={this.props.updateFooterNavTapStatus}
               />
             );
           }}
@@ -124,6 +138,9 @@ class App extends Component {
                 initialGeoLocation={this.props.initialGeoLocation}
                 searchedVendorList={this.props.searchedVendorList}
                 updateVendorDetailId={this.props.updateVendorDetailId}
+                updateFooterNavTapStatus={this.props.updateFooterNavTapStatus}
+                searchKeyWord={this.props.searchKeyWord}
+                updateSearchKeyWord={this.props.updateSearchKeyWord}
               />
             );
           }}
@@ -131,13 +148,26 @@ class App extends Component {
         <Route
           path="/mylist"
           render={() => {
-            return <MyListPage />;
+            return (
+              <MyListPage
+                isAuthenticated={this.props.isAuthenticated}
+                _userSignInSignUpRequest={this.props._userSignInSignUpRequest}
+                authorizedUserData={this.props.authorizedUserData}
+                initialGeoLocation={this.props.initialGeoLocation}
+                _getCustomerFavoriteListRequest={
+                  this.props._getCustomerFavoriteListRequest
+                }
+                myFavoriteList={this.props.myFavoriteList}
+                updateVendorDetailId={this.props.updateVendorDetailId}
+                updateFooterNavTapStatus={this.props.updateFooterNavTapStatus}
+              />
+            );
           }}
         />
         <Route
-          path="/event"
+          path="/admin/registration"
           render={() => {
-            return <EventPage />;
+            return <Registration />;
           }}
         />
         <Footer

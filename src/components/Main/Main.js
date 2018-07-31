@@ -17,6 +17,7 @@ class Main extends Component {
 
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
+    this.props.updateFooterNavTapStatus("main-tap");
   }
 
   componentWillUnmount() {

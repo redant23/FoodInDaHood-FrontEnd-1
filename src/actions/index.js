@@ -23,7 +23,13 @@ import {
   UPDATE_VENDOR_DETAIL_ID,
   SET_VENDOR_DETAIL_STATUS_TAP_TO_MENU,
   SET_VENDOR_DETAIL_STATUS_TAP_TO_INFO,
-  SET_VENDOR_DETAIL_STATUS_TAP_TO_REVIEW
+  SET_VENDOR_DETAIL_STATUS_TAP_TO_REVIEW,
+  UPDATE_AUTHORIZED_USER_DATA,
+  UPDATE_VENDOR_COMMENT_LIST,
+  UPDATE_MY_FAVORITE_LIST,
+  ADD_FAVORITE_IN_VENDOR_DETAILINFO,
+  REMOVE_FAVORITE_IN_VENDOR_DETAILINFO,
+  UPDATE_SEARCH_KEY_WORD
 } from "../constants";
 
 export const updateInitialGeoLocationAction = initialGeoLocation => ({
@@ -131,4 +137,34 @@ export const setVendorDetailMenuTapStatusToInfoAction = () => ({
 
 export const setVendorDetailMenuTapStatusToReviewAction = () => ({
   type: SET_VENDOR_DETAIL_STATUS_TAP_TO_REVIEW
+});
+
+export const updateAthorizedUserInfoAction = userData => ({
+  type: UPDATE_AUTHORIZED_USER_DATA,
+  userData
+});
+
+export const updateVendorCommentListAction = commentList => ({
+  type: UPDATE_VENDOR_COMMENT_LIST,
+  commentList
+});
+
+export const updateMyFavoriteListAction = myFavoriteList => ({
+  type: UPDATE_MY_FAVORITE_LIST,
+  myFavoriteList
+});
+
+export const addFavoriteInVendorDetailInfoAction = customerId => ({
+  type: ADD_FAVORITE_IN_VENDOR_DETAILINFO,
+  customerId
+});
+
+export const removeFavoriteInVendorDetailInfoAction = customerId => ({
+  type: REMOVE_FAVORITE_IN_VENDOR_DETAILINFO,
+  customerId
+});
+
+export const updateSearchKeywordAction = foodName => ({
+  type: UPDATE_SEARCH_KEY_WORD,
+  foodName
 });

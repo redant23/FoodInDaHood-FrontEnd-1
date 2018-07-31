@@ -48,15 +48,6 @@ class Footer extends Component {
           >
             <span>나의목록</span>
           </Link>
-          <Link
-            to="/event"
-            className={`extra ${classNames({
-              highlight: this.props.footerNavTapStatus.extraTap
-            })}`}
-            onClick={this.handleClick.bind(this)}
-          >
-            <span>이벤트</span>
-          </Link>
         </nav>
       </footer>
     );

@@ -1,0 +1,24 @@
+.login-btn {
+  padding: 10px;
+  color: #fff;
+  background-color: #365899;
+  font-size: 18px !important;
+}
+
+.my-list-info {
+  display: flex;
+  padding: 20px;
+}
+
+.my-list-img-wrapper {
+  margin-right: 10px;
+}
+
+.my-list-img {
+  width: 100px;
+  height: 100px;
+}
+
+.my-list-info-detail > div,ul {
+  margin-bottom: 5px;
+}

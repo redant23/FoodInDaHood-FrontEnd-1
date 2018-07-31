@@ -12,6 +12,10 @@ import vendorListTotalNumber from "./vendorListTotalNumber";
 import vendorDetailInfo from "./vendorDetailInfo";
 import vendorDetailId from "./vendorDetailId";
 import vendorDetailTapStatus from "./vendorDetailTapStatus";
+import authorizedUserData from "./authorizedUserData";
+import vendorCommentList from "./vendorCommentList";
+import myFavoriteList from "./myFavoriteList";
+import searchKeyWord from "./searchKeyWord";
 
 export default combineReducers({
   initialGeoLocation,
@@ -26,5 +30,9 @@ export default combineReducers({
   vendorListTotalNumber,
   vendorDetailInfo,
   vendorDetailId,
-  vendorDetailTapStatus
+  vendorDetailTapStatus,
+  authorizedUserData,
+  vendorCommentList,
+  myFavoriteList,
+  searchKeyWord
 });
