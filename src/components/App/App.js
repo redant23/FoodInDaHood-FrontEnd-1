@@ -44,11 +44,11 @@ class App extends Component {
       console.warn(`ERROR(${err.code}): ${err.message}`);
     }
 
-    navigator.geolocation.getCurrentPosition(
-      success.bind(this),
-      error.bind(this),
-      options
-    );
+    // navigator.geolocation.getCurrentPosition(
+    //   success.bind(this),
+    //   error.bind(this),
+    //   options
+    // );
 
     // var facebookToken = localStorage.getItem("x-auth-facebook-token");
     // this.props._userSignInSignUpRequest(facebookToken);
@@ -167,7 +167,13 @@ class App extends Component {
         <Route
           path="/admin/registration"
           render={() => {
-            return <Registration />;
+            return (
+              <Registration
+                _vendorRegistrationRequest={
+                  this.props._vendorRegistrationRequest
+                }
+              />
+            );
           }}
         />
         <Footer

@@ -99,7 +99,7 @@ const mapDispatchToProps = dispatch => ({
 
     axios({
       method: "get",
-      url: `http://192.168.0.42:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
+      url: `http://192.168.1.88:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
     }).then(res => {
       isInProgress = false;
 
@@ -163,7 +163,7 @@ const mapDispatchToProps = dispatch => ({
 
     axios({
       method: "get",
-      url: `http://192.168.0.42:5000/api/vendor/vendor-search?keyword=${encodedKeyWord}`
+      url: `http://192.168.1.88:5000/api/vendor/vendor-search?keyword=${encodedKeyWord}`
     }).then(res => {
       dispatch(updateSearchedVendorListAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -176,7 +176,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(activateScrollLoadingAction());
     axios({
       method: "get",
-      url: `http://192.168.0.42:5000/api/vendor/vendor-detail?vendorId=${vendorId}`
+      url: `http://192.168.1.88:5000/api/vendor/vendor-detail?vendorId=${vendorId}`
     }).then(res => {
       dispatch(updateVendorDetailInfoAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -204,7 +204,7 @@ const mapDispatchToProps = dispatch => ({
       cache: "default"
     };
 
-    fetch("http://192.168.0.42:5000/api/auth/facebook", options).then(r => {
+    fetch("http://192.168.1.88:5000/api/auth/facebook", options).then(r => {
       if (r.status !== 500) {
         r.json().then(data => {
           localStorage.setItem("x-auth-token", data.token);
@@ -242,7 +242,7 @@ const mapDispatchToProps = dispatch => ({
     formData.append("comment_img", commentInfo.image);
     formData.append("created_at", new Date());
 
-    return fetch("http://192.168.0.42:5000/api/comment/new", {
+    return fetch("http://192.168.1.88:5000/api/comment/new", {
       method: "POST",
       body: formData
     });
@@ -250,14 +250,14 @@ const mapDispatchToProps = dispatch => ({
   _getVendorCommentListRequest: vendorId => {
     axios({
       method: "get",
-      url: `http://192.168.0.42:5000/api/comment/list?vendorId=${vendorId}`
+      url: `http://192.168.1.88:5000/api/comment/list?vendorId=${vendorId}`
     }).then(res => {
       dispatch(updateVendorCommentListAction(res.data));
     });
 
     axios({
       method: "get",
-      url: `http://192.168.0.42:5000/api/vendor/vendor-detail?vendorId=${vendorId}`
+      url: `http://192.168.1.88:5000/api/vendor/vendor-detail?vendorId=${vendorId}`
     }).then(res => {
       dispatch(updateVendorDetailInfoAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -272,7 +272,7 @@ const mapDispatchToProps = dispatch => ({
     };
     axios({
       method: "POST",
-      url: `http://192.168.0.42:5000/api/favorite/add`,
+      url: `http://192.168.1.88:5000/api/favorite/add`,
       data
     }).then(() => {
       dispatch(addFavoriteInVendorDetailInfoAction(customerId));
@@ -289,7 +289,7 @@ const mapDispatchToProps = dispatch => ({
 
     axios({
       method: "POST",
-      url: `http://192.168.0.42:5000/api/favorite/remove`,
+      url: `http://192.168.1.88:5000/api/favorite/remove`,
       data
     }).then(() => {
       dispatch(removeFavoriteInVendorDetailInfoAction(customerId));
@@ -301,7 +301,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(activateScrollLoadingAction());
     axios({
       method: "GET",
-      url: `http://192.168.0.42:5000/api/customer/myfavoritetrucks?customerId=${customerId}`
+      url: `http://192.168.1.88:5000/api/customer/myfavoritetrucks?customerId=${customerId}`
     }).then(res => {
       dispatch(updateMyFavoriteListAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -309,6 +309,51 @@ const mapDispatchToProps = dispatch => ({
   },
   updateSearchKeyWord: foodName => {
     dispatch(updateSearchKeywordAction(foodName));
+  },
+  _vendorRegistrationRequest: vendorInfo => {
+    console.log(vendorInfo);
+    let formData = new FormData();
+    formData.append("title", vendorInfo.title);
+    formData.append("description", vendorInfo.description);
+    formData.append("permissionNumber", vendorInfo.permissionNumber);
+    formData.append("address", vendorInfo.address);
+    formData.append("lat", vendorInfo.lat);
+    formData.append("lng", vendorInfo.lng);
+    formData.append("tel", vendorInfo.tel);
+    formData.append("owner", vendorInfo.owner);
+    formData.append("joinDate", new Date());
+    formData.append("openTime", vendorInfo.openTime);
+    formData.append("closeTime", vendorInfo.closeTime);
+    formData.append("image", vendorInfo.image);
+    formData.append("menu", JSON.stringify(vendorInfo.menu));
+    formData.append(
+      "foodCategory",
+      JSON.stringify(vendorInfo.menuCategoryData)
+    );
+
+    console.log(formData);
+    debugger;
+    vendorInfo.menu.forEach((item, index) => {
+      formData.append(`menuPhoto`, vendorInfo.menu[index].img_url);
+    });
+
+    fetch("http://192.168.1.88:5000/api/vendor/signup/add", {
+      method: "POST",
+      body: formData,
+      data: JSON.stringify(vendorInfo)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        debugger;
+      });
+
+    // axios.post("http://192.168.1.88:5000/api/vendor/signup/add", {
+    //   headers: {
+    //     "Content-Type": "multipart/form-data"
+    //   },
+    //   data: formData
+    // });
   }
 });
 

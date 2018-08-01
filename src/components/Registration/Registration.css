@@ -30,16 +30,7 @@
 
 .menu-category-list {
   border: 1px solid gray;
-  height: 300px;
   padding: 10px;
-}
-
-.menu-category-list > span {
-  margin-right: 5px;
-  background: yellow;
-  border-radius: 5px;
-  padding: 5px;
-  line-height: 35px;
 }
 
 .menu-form {
@@ -54,4 +45,9 @@
 
 .menu-form > div > label > input,textarea{
   width: 100%;
+}
+
+.isMainMenuInput {
+  display: inline-block !important;
+  width: 20px;
 }

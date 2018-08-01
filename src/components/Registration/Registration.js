@@ -20,16 +20,16 @@ class Registration extends Component {
       foodCategory: [],
       menu: [
         {
-          menu: {
-            menuName: "",
-            menuPrice: "",
-            menuDescription: "",
-            menuPhoto: "",
-            isMainMenu: false
-          }
+          name: "",
+          price: "",
+          description: "",
+          img_url: "",
+          is_main_menu: false
         }
       ],
-      menuForm: [1]
+      menuForm: [1],
+      menuCategoryData: ["핫도그", "빈대떡", "무파마", "라면", "햄버거", "피자"],
+      selectedCategoryData: []
     };
   }
 
@@ -37,7 +37,13 @@ class Registration extends Component {
     ev.preventDefault();
     if (this.state.menuForm.length < 3) {
       this.state.menuForm.push(1);
-      this.state.menu.push({ menu: {} });
+      this.state.menu.push({
+        name: "",
+        price: "",
+        description: "",
+        img_url: "",
+        is_main_menu: false
+      });
     }
 
     this.setState({ ...this.state });
@@ -110,22 +116,24 @@ class Registration extends Component {
 
   handleMenuFormChange(ev) {
     let menuNumber = Number(ev.currentTarget.dataset.id);
+    let updatingState = { ...this.state };
     if (ev.target.name === "menu-name") {
-      this.state.menu[menuNumber].menu.menuName = ev.target.value;
-      this.setState({ ...this.state });
+      updatingState.menu[menuNumber].name = ev.target.value;
+      this.setState({ ...updatingState });
     } else if (ev.target.name === "menu-price") {
-      this.state.menu[menuNumber].menu.menuPrice = ev.target.value;
-      this.setState({ ...this.state });
+      updatingState.menu[menuNumber].price = ev.target.value;
+      this.setState({ ...updatingState });
     } else if (ev.target.name === "menu-description") {
-      this.state.menu[menuNumber].menu.menuDescription = ev.target.value;
-      this.setState({ ...this.state });
+      updatingState.menu[menuNumber].description = ev.target.value;
+      this.setState({ ...updatingState });
     } else if (ev.target.name === "menu-photo") {
-      this.state.menu[menuNumber].menu.menuPhoto = ev.target.files[0];
-      this.setState({ ...this.state });
+      updatingState.menu[menuNumber].img_url = ev.target.files[0];
+      this.setState({ ...updatingState });
     } else if (ev.target.name === "menu-main") {
-      this.state.menu[menuNumber].menu.isMainMenu = !this.state.menu[menuNumber]
-        .menu.isMainMenu;
-      this.setState({ ...this.state });
+      updatingState.menu[menuNumber].is_main_menu = !updatingState.menu[
+        menuNumber
+      ].is_main_menu;
+      this.setState({ ...updatingState });
     }
   }
 
@@ -133,13 +141,34 @@ class Registration extends Component {
     console.log(ev.target);
   }
 
-  handleMenuCategoryChange(ev) {
-    console.log(ev.target);
+  handleMenuCategoryClick(ev) {
+    let item = ev.target.innerHTML;
+    let updatingState = { ...this.state };
+
+    if (!updatingState.selectedCategoryData.includes(item)) {
+      updatingState.selectedCategoryData.push(item);
+      this.setState({ ...updatingState });
+    }
+  }
+
+  handleFoodCategoryChange(ev) {
+    let updatingState = { ...this.state };
+    if (ev.target.name === "foodCategory1") {
+      updatingState.foodCategory[0] = ev.target.value;
+      this.setState(updatingState);
+    } else if (ev.target.name === "foodCategory2") {
+      updatingState.foodCategory[1] = ev.target.value;
+      this.setState(updatingState);
+    } else if (ev.target.name === "foodCategory3") {
+      updatingState.foodCategory[2] = ev.target.value;
+      this.setState(updatingState);
+    }
   }
 
   handleSubmit(ev) {
     ev.preventDefault();
     console.log(this.state);
+    this.props._vendorRegistrationRequest(this.state);
   }
 
   render() {
@@ -205,7 +234,7 @@ class Registration extends Component {
             <label htmlFor="">
               <span className="label-name">위도</span>
               <input
-                type="text"
+                type="number"
                 value={this.state.lat}
                 onChange={this.handleLatChange.bind(this)}
               />
@@ -215,7 +244,7 @@ class Registration extends Component {
             <label htmlFor="">
               <span className="label-name">경도</span>
               <input
-                type="text"
+                type="number"
                 value={this.state.lng}
                 onChange={this.handleLngChange.bind(this)}
               />
@@ -262,12 +291,31 @@ class Registration extends Component {
             </label>
           </div>
           <div className="menu-category-list">
-            <span>
+            <h1>카테고리 3개를 입력해 주세요.</h1>
+            <label htmlFor="">
+              <span className="label-name">음식 카테고리1</span>
               <input
-                value={this.state.foodCategory}
-                foodCategoryonChange={this.handleMenuCategoryChange.bind(this)}
+                type="text"
+                name="foodCategory1"
+                onChange={this.handleFoodCategoryChange.bind(this)}
               />
-            </span>
+            </label>
+            <label htmlFor="">
+              <span className="label-name">음식 카테고리2</span>
+              <input
+                type="text"
+                name="foodCategory2"
+                onChange={this.handleFoodCategoryChange.bind(this)}
+              />
+            </label>
+            <label htmlFor="">
+              <span className="label-name">음식 카테고리3</span>
+              <input
+                type="text"
+                name="foodCategory3"
+                onChange={this.handleFoodCategoryChange.bind(this)}
+              />
+            </label>
           </div>
           <div>
             {this.state.menuForm.map((item, index) => (
@@ -305,7 +353,11 @@ class Registration extends Component {
                 <div>
                   <label htmlFor="">
                     <span className="label-name">메인메뉴</span>
-                    <input type="checkbox" name="menu-main" />
+                    <input
+                      className="isMainMenuInput"
+                      type="checkbox"
+                      name="menu-main"
+                    />
                   </label>
                 </div>
               </div>
@@ -315,7 +367,7 @@ class Registration extends Component {
             <button onClick={this.handleAddClick.bind(this)}>추가</button>
             <button onClick={this.handleRemoveClick.bind(this)}>삭제</button>
           </div>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="완료" />
         </form>
       </div>
     );
