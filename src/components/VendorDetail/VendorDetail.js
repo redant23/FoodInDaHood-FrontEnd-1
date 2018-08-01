@@ -131,14 +131,23 @@ class VendorDetail extends Component {
     }
 
     var rateAvg = 0;
+    var rateAvgStar = 0;
 
     if (this.props.vendorCommentList.length && !rateAvg) {
       var sum = 0;
       this.props.vendorCommentList.forEach(item => {
         sum += item.rate;
       });
-
-      rateAvg = sum / this.props.vendorCommentList.length;
+      rateAvg = Math.round((sum / this.props.vendorCommentList.length) * 10) / 10;
+      if (Number(rateAvg.toString().indexOf('.') === -1)) {
+        rateAvgStar = rateAvg;
+      } else if (Number(rateAvg.toString().split('.')[1]) <= 2) {
+        rateAvgStar = parseInt(rateAvg);
+      } else if (Number(rateAvg.toString().split('.')[1]) <= 7) {
+        rateAvgStar = parseInt(rateAvg) + 0.5;
+      } else if (Number(rateAvg.toString().split('.')[1]) <= 9) {
+        rateAvgStar = parseInt(rateAvg) + 1;
+      }
     }
 
     return (
@@ -160,6 +169,7 @@ class VendorDetail extends Component {
                 <h1 className="vendor-detail-title">{vendor.title}</h1>
                 <h6 className="vendor-detail-address">
                   {vendor.address.split(" ")[1]}
+                  {" "}&middot;{" "}
                   <span>
                     {getDistanceFromTheTarget(
                       vendor.lat,
@@ -173,10 +183,10 @@ class VendorDetail extends Component {
                   {`${timeConvertor(vendor.open_time)} -
                   ${timeConvertor(vendor.close_time)}`}
                   {isOpen(vendor.open_time, vendor.close_time) ? (
-                    <span className="working-status open">OPEN</span>
+                    <span className="working-status open">영업중</span>
                   ) : (
-                    <span className="working-status closed">CLOSED</span>
-                  )}
+                      <span className="working-status closed">영업종료</span>
+                    )}
                 </div>
                 <div className="vendor-detail-food-category">
                   {vendor.food_categories_info.map(categoryInfo => (
@@ -197,25 +207,32 @@ class VendorDetail extends Component {
               </div>
               <div className="vendor-detail-main-info-right">
                 <div className="vendor-detail-rate">
-                  평점: {rateAvg} 점
+                  <span className="vendor-detail-rate-text">{rateAvg} 점</span>
                   <Rate
-                    className="comment-form-rate"
-                    defaultValue={rateAvg}
+                    className="comment-form-rate rc-rate-disabled"
+                    value={rateAvgStar}
                     character={<i className="anticon anticon-star" />}
                     allowHalf={true}
+                    disabled={true}
                   />
                 </div>
                 <div className="vendor-detail-favorite-number">
-                  즐겨찾기 갯수: {vendor.favorites.length}
+                  즐겨찾기 : {vendor.favorites.length}
                 </div>
-                <div className="vendor-detail-favorite-toggle-btn">
+                <div className="vendor-detail-favorite-toggle-btn-wrap">
                   {this.props.isAuthenticated ? (
-                    <input
-                      type="checkbox"
-                      id="myCheck"
-                      onChange={this.handleFavoriteClick.bind(this)}
-                      checked={isFavorite}
-                    />
+                    <div className="vendor-detail-favorite-toggle-btn">
+                      {
+                        isFavorite ?
+                          <span className="favorite-tint-selected">즐겨찾기 해제</span> : <span className="favorite-tint">즐겨찾기 추가</span>
+                      }
+                      <input
+                        type="checkbox"
+                        id="myCheck"
+                        onChange={this.handleFavoriteClick.bind(this)}
+                        checked={isFavorite}
+                      />
+                    </div>
                   ) : null}
                 </div>
               </div>
@@ -256,11 +273,11 @@ class VendorDetail extends Component {
                             />
                           </div>
                           <div className="vendor-detail-menu-item-right">
-                            <div>{menu.name}</div>
-                            <div>{menu.price} 원</div>
-                            <div>{menu.description}</div>
+                            <div>메뉴명: <span className="justyfied-area">{menu.name}</span></div>
+                            <div>가격: <span className="justyfied-area">{menu.price} 원</span></div>
+                            <div>설명: <span className="justyfied-area">{menu.description}</span></div>
                           </div>
-                          <div className="speacial-menu">*추천메뉴</div>
+                          <div className="speacial-menu">사장님이 추천하는 메뉴!</div>
                         </li>
                       );
                     } else {
@@ -279,9 +296,9 @@ class VendorDetail extends Component {
                             />
                           </div>
                           <div className="vendor-detail-menu-item-right">
-                            <div>{menu.name}</div>
-                            <div>{menu.price} 원</div>
-                            <div>{menu.description}</div>
+                            <div>메뉴명: <span className="justyfied-area">{menu.name}</span></div>
+                            <div>가격: <span className="justyfied-area">{menu.price} 원</span></div>
+                            <div>설명: <span className="justyfied-area">{menu.description}</span></div>
                           </div>
                         </li>
                       );
@@ -293,18 +310,23 @@ class VendorDetail extends Component {
               )}
               {this.props.vendorDetailTapStatus.infoTap && (
                 <div className="vendor-detail-body-info">
+                  푸드트럭 소개
                   <div className="vendor-detail-body-info-description">
                     {vendor.description}
                   </div>
+                  푸드트럭 사업자 성명
                   <div className="vendor-detail-body-info-owner">
                     {vendor.owner}
                   </div>
+                  영업 허가번호
                   <div className="vendor-detail-body-info-permission-no">
                     {vendor.permission_no}
                   </div>
+                  푸드트럭 전화번호
                   <div className="vendor-detail-body-info-tel">
                     {vendor.tel}
                   </div>
+                  푸드트럭 주소
                   <div className="vendor-detail-body-info-address">
                     {vendor.address}
                   </div>
@@ -344,6 +366,7 @@ class VendorDetail extends Component {
                         value={this.state.value}
                         onChange={this.handleChange.bind(this)}
                         type="text"
+                        placeholder="후기를 남겨주세요 :)"
                       />
                       <input
                         className="comment-form-img-upload"
@@ -359,16 +382,17 @@ class VendorDetail extends Component {
                       />
                     </form>
                   ) : (
-                    <div className="review-login-btn">
-                      <FacebookLogin
-                        appId="2171887249551647"
-                        autoLoad={false}
-                        fields="name,email,picture"
-                        onClick={this.componentClicked}
-                        callback={this.responseFacebook.bind(this)}
-                      />
-                    </div>
-                  )}
+                      <div className="review-login-btn">
+                        <span className="fb-login-text">로그인 후 댓글을 남겨주세요!</span>
+                        <FacebookLogin
+                          appId="2171887249551647"
+                          autoLoad={false}
+                          fields="name,email,picture"
+                          onClick={this.componentClicked}
+                          callback={this.responseFacebook.bind(this)}
+                        />
+                      </div>
+                    )}
                   <ul className="comment-list">
                     {this.props.vendorCommentList.map(comment => (
                       <li key={comment._id} className="comment-item">
@@ -386,8 +410,10 @@ class VendorDetail extends Component {
                             </h1>
                             <Rate
                               className="comment-rate"
-                              defaultValue={comment.rate}
                               character={<i className="anticon anticon-star" />}
+                              value={comment.rate}
+                              allowHalf={true}
+                              disabled={true}
                             />
                             <div className="comment-date">
                               {comment.created_at}

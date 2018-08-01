@@ -29,6 +29,7 @@ class SearchBar extends Component {
           className="search-bar-input"
           onChange={this.handleChangeWithPersist.bind(this)}
           type="text"
+          placeholder="지역, 카테고리, 푸드트럭명으로 검색"
         />
       </div>
     );

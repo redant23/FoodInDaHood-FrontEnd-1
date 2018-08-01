@@ -106,12 +106,15 @@ const mapDispatchToProps = dispatch => ({
       url: `http://localhost:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
     }).then(res => {
       isInProgress = false;
-
+      var vendorListTotalData;
       if (!!res.data.vendorList.length) {
+        vendorListTotalData = res.data.total;
         dispatch(updateVendorListAction(res.data.vendorList));
-        dispatch(updateVendorListTotalNumberAction(res.data.total));
+        dispatch(updateVendorListTotalNumberAction(vendorListTotalData));
         dispatch(updateVendorListPageStatusAction());
       } else {
+        vendorListTotalData = "0";
+        dispatch(updateVendorListTotalNumberAction(vendorListTotalData));
         dispatch(stopVendorListInfinityScrollStatusAction());
       }
       dispatch(deactivateScrollLoadingAction());

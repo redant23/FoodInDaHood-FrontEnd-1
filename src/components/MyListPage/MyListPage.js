@@ -70,27 +70,32 @@ class MyListPage extends Component {
               {this.props.myFavoriteList && (
                 <Fragment>
                   <div>
-                    나의 즐겨찾는 트럭 수 :
-                    {this.props.myFavoriteList.length}
+                    내가 즐겨찾는 트럭: &nbsp;
+                    {this.props.myFavoriteList.length}개
                   </div>
-                  <VendorList
-                    vendorList={this.props.myFavoriteList}
-                    initialGeoLocation={this.props.initialGeoLocation}
-                    handleClick={this.handleClick.bind(this)}
-                  />
+                  <div className="my-vendorlist-wrap">
+                    <VendorList
+                      vendorList={this.props.myFavoriteList}
+                      initialGeoLocation={this.props.initialGeoLocation}
+                      handleClick={this.handleClick.bind(this)}
+                    />
+                  </div>
                 </Fragment>
               )}
             </div>
           </Fragment>
         ) : (
-          <FacebookLogin
-            appId="2171887249551647"
-            autoLoad={false}
-            fields="name,email,picture"
-            onClick={this.componentClicked}
-            callback={this.responseFacebook.bind(this)}
-          />
-        )}
+            <div className="my-info-login-btn">
+              <span className="my-info-fb-login-text">로그인 후 이용할 수 있습니다!</span>
+              <FacebookLogin
+                appId="2171887249551647"
+                autoLoad={false}
+                fields="name,email,picture"
+                onClick={this.componentClicked}
+                callback={this.responseFacebook.bind(this)}
+              />
+            </div>
+          )}
       </div>
     );
   }

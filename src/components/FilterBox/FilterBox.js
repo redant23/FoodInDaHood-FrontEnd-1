@@ -45,9 +45,9 @@ class FilterBox extends Component {
 
   render() {
 
-    var toggleText = '접기';
+    var toggleText = '-';
     if (!this.state.isConsoleOpen) {
-      toggleText = '펼치기';
+      toggleText = '+';
     }
 
     return (

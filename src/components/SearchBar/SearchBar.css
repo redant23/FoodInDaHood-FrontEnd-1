@@ -1,14 +1,17 @@
 .search-bar {
   text-align: center;
-  background-color: #E4E4E4;
+  background-color: #E2E2E2;
   height: 60px;
   line-height: 60px;
+  border-bottom:1px solid #a3a3a3;
 }
 
 .search-bar-input {
   width: 90%;
   height: 40px;
-  border: 1px solid black;
+  border: 1px solid #a3a3a3;
+  color: #4a4a4a;
+  border-radius: 4px;
   outline: none;
   padding-left: 15px;
 }
