@@ -1,3 +1,4 @@
+
 .vendor-list {
   margin-bottom: 60px;
 }
@@ -5,8 +6,10 @@
 .vendor-list-item {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 8px;
+  padding-top: 12px;
   border-bottom: 1px solid #CBCBCB;
+  font-size: 0.9em;
 }
 
 .vendor-list-item .vendor-list-img-wrapper {
@@ -14,7 +17,8 @@
 }
 
 .vendor-list-item .vendor-list-info {
-  flex-grow: 8
+  flex-grow: 8;
+  color:#4a4a4a;
 }
 
 .vendor-list-item .vendor-list-info > div {
@@ -26,7 +30,9 @@
 }
 
 .vendor-list-item .vendor-list-detail {
-  flex-grow: 1
+  flex-grow: 1;
+  font-size: 0.9em;
+  color: #4a4a4a;
 }
 
 .vendor-list-item .vendor-list-detail > div {
@@ -40,11 +46,21 @@
 
 .working-status.open{
   margin-left: 5px;
-  border: 1px solid green;
+  background-color: #35DB7D;
+  border-radius: 4px;
+  color:#fff;
+  font-size: 0.9em;
+  padding:0.3em;
+  vertical-align: top;
 }
 
 .working-status.closed{
   margin-left: 5px;
-  border: 1px solid red;
+  background-color: #DB3D35;
+  border-radius: 4px;
+  color:#fff;
+  font-size: 0.9em;
+  padding:0.3em;
+  vertical-align: top;
 }
 

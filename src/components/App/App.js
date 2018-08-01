@@ -13,9 +13,9 @@ import "./App.css";
 class App extends Component {
   componentDidMount() {
     var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
+      enableHighAccuracy: false,
+      maximumAge: 30000,
+      timeout: 27000,
     };
 
     function success(pos) {

@@ -39,10 +39,10 @@ class VendorList extends Component {
                 <span>{" - "}</span>
                 <span>{timeConvertor(vendor.close_time)}</span>
                 {isOpen(vendor.open_time, vendor.close_time) ? (
-                  <span className="working-status open">OPEN</span>
+                  <span className="working-status open">영업중</span>
                 ) : (
-                  <span className="working-status closed">CLOSED</span>
-                )}
+                    <span className="working-status closed">영업종료</span>
+                  )}
               </div>
             </div>
             <div className="vendor-list-detail">

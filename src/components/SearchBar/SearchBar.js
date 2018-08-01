@@ -29,7 +29,6 @@ class SearchBar extends Component {
           className="search-bar-input"
           onChange={this.handleChangeWithPersist.bind(this)}
           type="text"
-          autoFocus
         />
       </div>
     );

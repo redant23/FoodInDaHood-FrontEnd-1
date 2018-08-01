@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -30,7 +31,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
   line-height: 1;
-  width: 375px;
+	width: 375px;
+	background-color: #4a4a4a;
+	font-family: 'Spoqa Han Sans', 'Sans-serif';
 }
 ol, ul {
 	list-style: none;
@@ -49,8 +52,9 @@ table {
 }
 
 * {
-  font-size: 12px !important;
-  box-sizing: border-box;
+  font-size: 16px;
+	box-sizing: border-box;
+	font-family: 'Spoqa Han Sans', 'Sans-serif';
 }
 
 a, a:visited {

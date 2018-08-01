@@ -44,6 +44,12 @@ class FilterBox extends Component {
   }
 
   render() {
+
+    var toggleText = '접기';
+    if (!this.state.isConsoleOpen) {
+      toggleText = '펼치기';
+    }
+
     return (
       <div className="filter-box">
         <div className="filter-box-btn-container">
@@ -51,7 +57,7 @@ class FilterBox extends Component {
             className="filter-box-btn"
             onClick={this.handleClick.bind(this)}
           >
-            여기눌러봐
+            필터 {toggleText}
           </button>
         </div>
         <div

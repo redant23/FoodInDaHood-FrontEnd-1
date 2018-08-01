@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import "./Footer.css";
+import navMain from "./Images/nav-main.png";
+import navFind from "./Images/nav-find.png";
+import navMy from "./Images/nav-my.png";
+import navMainAct from "./Images/nav-main-act.png";
+import navFindAct from "./Images/nav-find-act.png";
+import navMyAct from "./Images/nav-my-act.png";
 
 class Footer extends Component {
   handleClick(ev) {
@@ -18,6 +24,17 @@ class Footer extends Component {
   }
 
   render() {
+    var mainImageActive = navMain;
+    var findImageActive = navFind;
+    var myImageActive = navMy;
+    if (this.props.footerNavTapStatus.mainTap) {
+      mainImageActive = navMainAct;
+    } else if (this.props.footerNavTapStatus.searchTap) {
+      findImageActive = navFindAct;
+    } else if (this.props.footerNavTapStatus.myListTap) {
+      myImageActive = navMyAct;
+    }
+
     return (
       <footer className="main-footer">
         <nav className="footer-nav">
@@ -28,7 +45,7 @@ class Footer extends Component {
             })}`}
             onClick={this.handleClick.bind(this)}
           >
-            <span>메인</span>
+            <div className="nav-items"><img className="nav-main" src={mainImageActive} /><span>메인</span></div>
           </Link>
           <Link
             to="/search"
@@ -37,7 +54,7 @@ class Footer extends Component {
             })}`}
             onClick={this.handleClick.bind(this)}
           >
-            <span>검색</span>
+            <div className="nav-items"><img className="nav-find" src={findImageActive} /><span>검색</span></div>
           </Link>
           <Link
             to="/mylist"
@@ -46,7 +63,7 @@ class Footer extends Component {
             })}`}
             onClick={this.handleClick.bind(this)}
           >
-            <span>나의목록</span>
+            <div className="nav-items"><img className="nav-my" src={myImageActive} /><span>나의목록</span></div>
           </Link>
         </nav>
       </footer>
