@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Map from "../Map/Map";
 
 class MapWrapper extends Component {
@@ -26,17 +26,15 @@ class MapWrapper extends Component {
 
   render() {
     return (
-      <Fragment>
-        <Map
-          isMarkerShown={this.state.isMarkerShown}
-          onMarkerClick={this.handleMarkerClick}
-          initialGeoLocation={this.props.initialGeoLocation}
-          vendorList={this.props.vendorList}
-          zoomLevel={this.zoomLevelCalculator(this.props.vendorListDistance)}
-          markerInfoWindow={this.props.markerInfoWindow}
-          updateMarkerInfoWindowStatus={this.props.updateMarkerInfoWindowStatus}
-        />
-      </Fragment>
+      <Map
+        isMarkerShown={this.state.isMarkerShown}
+        onMarkerClick={this.handleMarkerClick}
+        initialGeoLocation={this.props.initialGeoLocation}
+        vendorList={this.props.vendorList}
+        zoomLevel={this.zoomLevelCalculator(this.props.vendorListDistance)}
+        markerInfoWindow={this.props.markerInfoWindow}
+        updateMarkerInfoWindowStatus={this.props.updateMarkerInfoWindowStatus}
+      />
     );
   }
 }

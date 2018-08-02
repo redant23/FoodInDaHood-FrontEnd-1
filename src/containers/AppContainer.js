@@ -91,8 +91,6 @@ const mapDispatchToProps = dispatch => ({
     var lat = geolocation.lat;
     var lng = geolocation.lng;
 
-    console.log(startIdx);
-    console.log(endIdx);
     dispatch(activateScrollLoadingAction());
 
     if (isInProgress) {

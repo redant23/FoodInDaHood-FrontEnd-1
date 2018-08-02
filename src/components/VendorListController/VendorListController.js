@@ -5,13 +5,13 @@ import "./VendorListController.css";
 
 class VendorListController extends Component {
   filterByFavorite(vendorList) {
-    return vendorList.sort(function (a, b) {
+    return vendorList.sort(function(a, b) {
       return b.favorites.length - a.favorites.length;
     });
   }
 
   filterByComment(vendorList) {
-    return vendorList.sort(function (a, b) {
+    return vendorList.sort(function(a, b) {
       return b.comments.length - a.comments.length;
     });
   }
@@ -20,7 +20,7 @@ class VendorListController extends Component {
     var targetLat = this.props.initialGeoLocation.lat;
     var targetLng = this.props.initialGeoLocation.lng;
 
-    return vendorList.sort(function (a, b) {
+    return vendorList.sort(function(a, b) {
       return (
         getDistanceFromLatLonInKm(a.lat, a.lng, targetLat, targetLng) -
         getDistanceFromLatLonInKm(b.lat, b.lng, targetLat, targetLng)
@@ -33,11 +33,12 @@ class VendorListController extends Component {
   }
 
   render() {
-
     return (
       <div className="filter-list-controller">
         <div className="vendor-list-total-number">
-          <span>검색범위 내 푸드트럭 수 &nbsp;&nbsp;{`${this.props.vendorListTotalNumber} 개`}</span>
+          <span>
+            검색범위 내 푸드트럭 수 &nbsp;&nbsp;{`${this.props.vendorListTotalNumber} 개`}
+          </span>
         </div>
         {this.props.vendorListFilterStatus.isByDistance &&
           !!this.props.vendorList && (

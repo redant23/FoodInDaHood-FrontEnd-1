@@ -85,17 +85,17 @@ class MyListPage extends Component {
             </div>
           </Fragment>
         ) : (
-            <div className="my-info-login-btn">
-              <span className="my-info-fb-login-text">로그인 후 이용할 수 있습니다!</span>
-              <FacebookLogin
-                appId="2171887249551647"
-                autoLoad={false}
-                fields="name,email,picture"
-                onClick={this.componentClicked}
-                callback={this.responseFacebook.bind(this)}
-              />
-            </div>
-          )}
+          <div className="my-info-login-btn">
+            <span className="my-info-fb-login-text">로그인 후 이용할 수 있습니다!</span>
+            <FacebookLogin
+              appId="2171887249551647"
+              autoLoad={false}
+              fields="name,email,picture"
+              onClick={this.componentClicked}
+              callback={this.responseFacebook.bind(this)}
+            />
+          </div>
+        )}
       </div>
     );
   }

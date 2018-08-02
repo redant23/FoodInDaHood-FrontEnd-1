@@ -44,10 +44,9 @@ class FilterBox extends Component {
   }
 
   render() {
-
-    var toggleText = '-';
+    var toggleText = "-";
     if (!this.state.isConsoleOpen) {
-      toggleText = '+';
+      toggleText = "+";
     }
 
     return (

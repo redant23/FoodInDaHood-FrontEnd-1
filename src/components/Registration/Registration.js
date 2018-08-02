@@ -27,9 +27,7 @@ class Registration extends Component {
           is_main_menu: false
         }
       ],
-      menuForm: [1],
-      menuCategoryData: ["핫도그", "빈대떡", "무파마", "라면", "햄버거", "피자"],
-      selectedCategoryData: []
+      menuForm: [1]
     };
   }
 
@@ -139,16 +137,6 @@ class Registration extends Component {
 
   handleCheckboxChange(ev) {
     console.log(ev.target);
-  }
-
-  handleMenuCategoryClick(ev) {
-    let item = ev.target.innerHTML;
-    let updatingState = { ...this.state };
-
-    if (!updatingState.selectedCategoryData.includes(item)) {
-      updatingState.selectedCategoryData.push(item);
-      this.setState({ ...updatingState });
-    }
   }
 
   handleFoodCategoryChange(ev) {

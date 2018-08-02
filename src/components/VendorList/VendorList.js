@@ -15,8 +15,7 @@ class VendorList extends Component {
 
     return (
       <ul className="vendor-list">
-        {
-          !!this.props.vendorList.length &&
+        {!!this.props.vendorList.length &&
           this.props.vendorList.map((vendor, index) => (
             <Link
               to={`/vendor/detail/${vendor._id}`}
@@ -26,7 +25,11 @@ class VendorList extends Component {
               onClick={this.handleClick.bind(this)}
             >
               <div className="vendor-list-img-wrapper">
-                <img className="vendor-list-img" src={vendor.img_url} alt="img" />
+                <img
+                  className="vendor-list-img"
+                  src={vendor.img_url}
+                  alt="img"
+                />
               </div>
               <div className="vendor-list-info">
                 <div className="vendor-list-title">
@@ -43,8 +46,8 @@ class VendorList extends Component {
                   {isOpen(vendor.open_time, vendor.close_time) ? (
                     <span className="working-status open">영업중</span>
                   ) : (
-                      <span className="working-status closed">영업종료</span>
-                    )}
+                    <span className="working-status closed">영업종료</span>
+                  )}
                 </div>
               </div>
               <div className="vendor-list-detail">
