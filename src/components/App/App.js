@@ -7,6 +7,7 @@ import SearchPage from "../SearchPage/SearchPage";
 import MyListPage from "../MyListPage/MyListPage";
 import Footer from "../Footer/Footer";
 import Registration from "../Registration/Registration";
+import axios from "axios";
 
 import "./App.css";
 
@@ -15,10 +16,11 @@ class App extends Component {
     var options = {
       enableHighAccuracy: false,
       maximumAge: 30000,
-      timeout: 27000,
+      timeout: 3000
     };
 
     function success(pos) {
+      console.log("navigator geolocation");
       var crd = pos.coords;
 
       let initialGeoLocation = {
@@ -40,8 +42,54 @@ class App extends Component {
       );
     }
 
-    function error(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
+    var tryAPIGeolocation = function() {
+      axios
+        .post(
+          "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyDLoqJ1W1fexc-GcnUjpxPw41NxZYRKDhk"
+        )
+        .then(res => {
+          console.log("api geolocation");
+          let initialGeoLocation = {
+            lat: res.data.location.lat,
+            lng: res.data.location.lng
+          };
+
+          var distance = this.props.vendorListDistance;
+          var startIdx = this.props.vendorListPageNumberStatus.startIdx;
+          var endIdx = this.props.vendorListPageNumberStatus.endIdx;
+
+          this.props.updateInitialGeoLocation(initialGeoLocation);
+
+          this.props.getVendorList_API_Request(
+            initialGeoLocation,
+            distance,
+            startIdx,
+            endIdx
+          );
+        })
+        .catch(err => {
+          console.log("failed to get API Geolocation", err);
+        });
+    };
+
+    function error(error) {
+      switch (error.code) {
+        case error.TIMEOUT:
+          console.log("Browser geolocation error! Timeout.");
+          tryAPIGeolocation.call(this);
+          break;
+        case error.PERMISSION_DENIED:
+          if (error.message.indexOf("Only secure origins are allowed") === 0) {
+            tryAPIGeolocation.call(this);
+          }
+          break;
+        case error.POSITION_UNAVAILABLE:
+          console.log("Browser geolocation error! Position unavailable.");
+          tryAPIGeolocation.call(this);
+          break;
+        default:
+          break;
+      }
     }
 
     navigator.geolocation.getCurrentPosition(
@@ -49,9 +97,6 @@ class App extends Component {
       error.bind(this),
       options
     );
-
-    // var facebookToken = localStorage.getItem("x-auth-facebook-token");
-    // this.props._userSignInSignUpRequest(facebookToken);
   }
 
   render() {
