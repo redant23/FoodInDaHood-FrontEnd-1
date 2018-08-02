@@ -16,6 +16,7 @@ import authorizedUserData from "./authorizedUserData";
 import vendorCommentList from "./vendorCommentList";
 import myFavoriteList from "./myFavoriteList";
 import searchKeyWord from "./searchKeyWord";
+import markerInfoWindow from "./markerInfoWindow";
 
 export default combineReducers({
   initialGeoLocation,
@@ -34,5 +35,6 @@ export default combineReducers({
   authorizedUserData,
   vendorCommentList,
   myFavoriteList,
-  searchKeyWord
+  searchKeyWord,
+  markerInfoWindow
 });

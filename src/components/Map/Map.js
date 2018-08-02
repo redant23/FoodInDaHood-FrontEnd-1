@@ -7,6 +7,7 @@ import {
   Marker,
   InfoWindow
 } from "react-google-maps";
+import "./Map.css";
 
 const Map = compose(
   withProps({
@@ -16,16 +17,6 @@ const Map = compose(
     containerElement: <div style={{ height: `300px`, width: `375px` }} />,
     mapElement: <div style={{ height: `100%` }} />
   }),
-  withStateHandlers(
-    () => ({
-      isOpen: false
-    }),
-    {
-      onToggleOpen: ({ isOpen }) => () => ({
-        isOpen: !isOpen
-      })
-    }
-  ),
   withScriptjs,
   withGoogleMap
 )(props => {
@@ -51,12 +42,23 @@ const Map = compose(
               <Marker
                 key={index}
                 position={{ lat: vendor.lat, lng: vendor.lng }}
-                onClick={props.onToggleOpen}
+                onClick={() => {
+                  if (!props.markerInfoWindow.includes(vendor._id)) {
+                    props.updateMarkerInfoWindowStatus(vendor._id, "open");
+                  }
+                }}
                 icon="https://process.filestackapi.com/AhTgLagciQByzXpFGRI0Az/resize=width:30/https://cdn.iconscout.com/public/images/icon/premium/png-512/food-truck-car-transport-machine-movement-transportation-3486058b4a238844-512x512.png"
               >
-                {props.isOpen && (
-                  <InfoWindow onCloseClick={props.onToggleOpen}>
-                    <span>{vendor.title}</span>
+                {props.markerInfoWindow.indexOf(vendor._id) !== -1 && (
+                  <InfoWindow
+                    onCloseClick={() => {
+                      props.updateMarkerInfoWindowStatus(vendor._id, "close");
+                    }}
+                  >
+                    <div>
+                      <img className="info-window-img" src={vendor.img_url} />
+                      <h5np>{vendor.title}</h5>
+                    </div>
                   </InfoWindow>
                 )}
               </Marker>

@@ -29,7 +29,9 @@ import {
   UPDATE_MY_FAVORITE_LIST,
   ADD_FAVORITE_IN_VENDOR_DETAILINFO,
   REMOVE_FAVORITE_IN_VENDOR_DETAILINFO,
-  UPDATE_SEARCH_KEY_WORD
+  UPDATE_SEARCH_KEY_WORD,
+  OPEN_MARKER_INFO_WINDOW,
+  CLOSE_MARKER_INFO_WINDOW
 } from "../constants";
 
 export const updateInitialGeoLocationAction = initialGeoLocation => ({
@@ -167,4 +169,14 @@ export const removeFavoriteInVendorDetailInfoAction = customerId => ({
 export const updateSearchKeywordAction = foodName => ({
   type: UPDATE_SEARCH_KEY_WORD,
   foodName
+});
+
+export const openMarkerInfoWindowAction = id => ({
+  type: OPEN_MARKER_INFO_WINDOW,
+  id
+});
+
+export const closeMarkerInfoWindowAction = id => ({
+  type: CLOSE_MARKER_INFO_WINDOW,
+  id
 });

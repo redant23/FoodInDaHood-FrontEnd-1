@@ -44,11 +44,11 @@ class App extends Component {
       console.warn(`ERROR(${err.code}): ${err.message}`);
     }
 
-    // navigator.geolocation.getCurrentPosition(
-    //   success.bind(this),
-    //   error.bind(this),
-    //   options
-    // );
+    navigator.geolocation.getCurrentPosition(
+      success.bind(this),
+      error.bind(this),
+      options
+    );
 
     // var facebookToken = localStorage.getItem("x-auth-facebook-token");
     // this.props._userSignInSignUpRequest(facebookToken);
@@ -123,6 +123,10 @@ class App extends Component {
                 vendorListTotalNumber={this.props.vendorListTotalNumber}
                 updateVendorDetailId={this.props.updateVendorDetailId}
                 updateFooterNavTapStatus={this.props.updateFooterNavTapStatus}
+                markerInfoWindow={this.props.markerInfoWindow}
+                updateMarkerInfoWindowStatus={
+                  this.props.updateMarkerInfoWindowStatus
+                }
               />
             );
           }}

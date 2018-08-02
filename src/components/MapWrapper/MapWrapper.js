@@ -41,6 +41,8 @@ class MapWrapper extends Component {
           initialGeoLocation={this.props.initialGeoLocation}
           vendorList={this.props.vendorList}
           zoomLevel={this.zoomLevelCalculator(this.props.vendorListDistance)}
+          markerInfoWindow={this.props.markerInfoWindow}
+          updateMarkerInfoWindowStatus={this.props.updateMarkerInfoWindowStatus}
         />
       </Fragment>
     );

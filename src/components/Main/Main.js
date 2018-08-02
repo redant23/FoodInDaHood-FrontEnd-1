@@ -74,6 +74,8 @@ class Main extends Component {
           initialGeoLocation={this.props.initialGeoLocation}
           vendorList={this.props.vendorList}
           vendorListDistance={this.props.vendorListDistance}
+          markerInfoWindow={this.props.markerInfoWindow}
+          updateMarkerInfoWindowStatus={this.props.updateMarkerInfoWindowStatus}
         />
         <FilterBox
           onDistanceClick={this.handleUpdateVendorListDistance.bind(this)}
