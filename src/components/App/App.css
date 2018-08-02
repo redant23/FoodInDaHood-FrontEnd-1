@@ -35,8 +35,8 @@
   width: 375px;
   height: 100%;
   text-align: center;
-  background: url("http://www.dynamocoop.be/wp-content/uploads/2015/10/spin.gif") no-repeat;
-  background-size: 50px 50px;
+  background: url("./Images/loading_truck.gif") no-repeat;
+  background-size: 300px 300px;
   background-position: center;
   background-color: rgba(255, 255, 255, 0.5);
 }

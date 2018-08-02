@@ -10,14 +10,6 @@ class MapWrapper extends Component {
     };
   }
 
-  componentDidMount() {
-    // this.delayedShowMarker();
-  }
-
-  handleMarkerClick = () => {
-    //
-  };
-
   zoomLevelCalculator = distance => {
     if (distance === 100) {
       return 16;

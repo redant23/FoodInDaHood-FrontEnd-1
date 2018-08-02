@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./Header.css";
-import logotype from './Images/logotype.png';
+import logotype from "./Images/logotype.png";
 
 class Header extends Component {
   handleClick() {
@@ -20,7 +20,7 @@ class Header extends Component {
                 뒤로
               </button>
             )}
-          <img className="main-title-img" src={logotype} />
+          <img className="main-title-img" src={logotype} alt="no-img" />
         </nav>
       </header>
     );

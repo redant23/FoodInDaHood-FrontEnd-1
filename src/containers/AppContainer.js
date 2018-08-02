@@ -106,24 +106,18 @@ const mapDispatchToProps = dispatch => ({
       url: `http://localhost:5000/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
     }).then(res => {
       isInProgress = false;
-      var vendorListTotalData;
+      var vendorListTotalData = res.data.total;
+
       if (!!res.data.vendorList.length) {
-        vendorListTotalData = res.data.total;
         dispatch(updateVendorListAction(res.data.vendorList));
         dispatch(updateVendorListTotalNumberAction(vendorListTotalData));
         dispatch(updateVendorListPageStatusAction());
       } else {
-        vendorListTotalData = "0";
         dispatch(updateVendorListTotalNumberAction(vendorListTotalData));
         dispatch(stopVendorListInfinityScrollStatusAction());
       }
       dispatch(deactivateScrollLoadingAction());
     });
-
-    // setTimeout(() => {
-    //   dispatch(updateVendorListAction(sampleData));
-    //   dispatch(updateVendorListTotalNumberAction(200));
-    // }, 2000);
   },
   updateFooterNavTapStatus: tapType => {
     if (tapType === "main-tap") {
@@ -338,8 +332,6 @@ const mapDispatchToProps = dispatch => ({
       JSON.stringify(vendorInfo.menuCategoryData)
     );
 
-    console.log(formData);
-    debugger;
     vendorInfo.menu.forEach((item, index) => {
       formData.append(`menuPhoto`, vendorInfo.menu[index].img_url);
     });
@@ -352,15 +344,7 @@ const mapDispatchToProps = dispatch => ({
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        debugger;
       });
-
-    // axios.post("http://localhost:5000/api/vendor/signup/add", {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data"
-    //   },
-    //   data: formData
-    // });
   },
   updateMarkerInfoWindowStatus: (id, type) => {
     if (type === "open") {

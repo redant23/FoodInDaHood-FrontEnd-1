@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import Rate from "rc-rate";
 import FacebookLogin from "react-facebook-login";
 import { Link } from "react-router-dom";
+import { createdAt } from "../../helpers/timeHelpers";
 import { timeConvertor, isOpen } from "../../helpers/timeHelpers";
 import { getDistanceFromTheTarget } from "../../helpers/filterHelpers";
 import {
@@ -138,15 +139,15 @@ class VendorDetail extends Component {
       this.props.vendorCommentList.forEach(item => {
         sum += item.rate;
       });
-      rateAvg = Math.round((sum / this.props.vendorCommentList.length) * 10) / 10;
-      if (Number(rateAvg.toString().indexOf('.') === -1)) {
+      rateAvg = Math.round(sum / this.props.vendorCommentList.length * 10) / 10;
+      if (Number(rateAvg.toString().indexOf(".") === -1)) {
         rateAvgStar = rateAvg;
-      } else if (Number(rateAvg.toString().split('.')[1]) <= 2) {
-        rateAvgStar = parseInt(rateAvg);
-      } else if (Number(rateAvg.toString().split('.')[1]) <= 7) {
-        rateAvgStar = parseInt(rateAvg) + 0.5;
-      } else if (Number(rateAvg.toString().split('.')[1]) <= 9) {
-        rateAvgStar = parseInt(rateAvg) + 1;
+      } else if (Number(rateAvg.toString().split(".")[1]) <= 2) {
+        rateAvgStar = parseInt(rateAvg, 10);
+      } else if (Number(rateAvg.toString().split(".")[1]) <= 7) {
+        rateAvgStar = parseInt(rateAvg, 10) + 0.5;
+      } else if (Number(rateAvg.toString().split(".")[1]) <= 9) {
+        rateAvgStar = parseInt(rateAvg, 10) + 1;
       }
     }
 
@@ -168,8 +169,7 @@ class VendorDetail extends Component {
               <div className="vendor-detail-main-info-left">
                 <h1 className="vendor-detail-title">{vendor.title}</h1>
                 <h6 className="vendor-detail-address">
-                  {vendor.address.split(" ")[1]}
-                  {" "}&middot;{" "}
+                  {vendor.address.split(" ")[1]} &middot;{" "}
                   <span>
                     {getDistanceFromTheTarget(
                       vendor.lat,
@@ -185,8 +185,8 @@ class VendorDetail extends Component {
                   {isOpen(vendor.open_time, vendor.close_time) ? (
                     <span className="working-status open">영업중</span>
                   ) : (
-                      <span className="working-status closed">영업종료</span>
-                    )}
+                    <span className="working-status closed">영업종료</span>
+                  )}
                 </div>
                 <div className="vendor-detail-food-category">
                   {vendor.food_categories_info.map(categoryInfo => (
@@ -222,10 +222,11 @@ class VendorDetail extends Component {
                 <div className="vendor-detail-favorite-toggle-btn-wrap">
                   {this.props.isAuthenticated ? (
                     <div className="vendor-detail-favorite-toggle-btn">
-                      {
-                        isFavorite ?
-                          <span className="favorite-tint-selected">즐겨찾기 해제</span> : <span className="favorite-tint">즐겨찾기 추가</span>
-                      }
+                      {isFavorite ? (
+                        <span className="favorite-tint-selected">즐겨찾기 해제</span>
+                      ) : (
+                        <span className="favorite-tint">즐겨찾기 추가</span>
+                      )}
                       <input
                         type="checkbox"
                         id="myCheck"
@@ -273,9 +274,24 @@ class VendorDetail extends Component {
                             />
                           </div>
                           <div className="vendor-detail-menu-item-right">
-                            <div>메뉴명: <span className="justyfied-area">{menu.name}</span></div>
-                            <div>가격: <span className="justyfied-area">{menu.price} 원</span></div>
-                            <div>설명: <span className="justyfied-area">{menu.description}</span></div>
+                            <div>
+                              메뉴명:{" "}
+                              <span className="justyfied-area">
+                                {menu.name}
+                              </span>
+                            </div>
+                            <div>
+                              가격:{" "}
+                              <span className="justyfied-area">
+                                {menu.price} 원
+                              </span>
+                            </div>
+                            <div>
+                              설명:{" "}
+                              <span className="justyfied-area">
+                                {menu.description}
+                              </span>
+                            </div>
                           </div>
                           <div className="speacial-menu">사장님이 추천하는 메뉴!</div>
                         </li>
@@ -296,9 +312,24 @@ class VendorDetail extends Component {
                             />
                           </div>
                           <div className="vendor-detail-menu-item-right">
-                            <div>메뉴명: <span className="justyfied-area">{menu.name}</span></div>
-                            <div>가격: <span className="justyfied-area">{menu.price} 원</span></div>
-                            <div>설명: <span className="justyfied-area">{menu.description}</span></div>
+                            <div>
+                              메뉴명:{" "}
+                              <span className="justyfied-area">
+                                {menu.name}
+                              </span>
+                            </div>
+                            <div>
+                              가격:{" "}
+                              <span className="justyfied-area">
+                                {menu.price} 원
+                              </span>
+                            </div>
+                            <div>
+                              설명:{" "}
+                              <span className="justyfied-area">
+                                {menu.description}
+                              </span>
+                            </div>
                           </div>
                         </li>
                       );
@@ -382,50 +413,56 @@ class VendorDetail extends Component {
                       />
                     </form>
                   ) : (
-                      <div className="review-login-btn">
-                        <span className="fb-login-text">로그인 후 댓글을 남겨주세요!</span>
-                        <FacebookLogin
-                          appId="2171887249551647"
-                          autoLoad={false}
-                          fields="name,email,picture"
-                          onClick={this.componentClicked}
-                          callback={this.responseFacebook.bind(this)}
-                        />
-                      </div>
-                    )}
+                    <div className="review-login-btn">
+                      <span className="fb-login-text">로그인 후 댓글을 남겨주세요!</span>
+                      <FacebookLogin
+                        appId="2171887249551647"
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        onClick={this.componentClicked}
+                        callback={this.responseFacebook.bind(this)}
+                      />
+                    </div>
+                  )}
                   <ul className="comment-list">
-                    {this.props.vendorCommentList.map(comment => (
-                      <li key={comment._id} className="comment-item">
-                        <div className="comment-info">
-                          <div className="user-img-wrapper">
-                            <img
-                              className="user-img"
-                              src={comment.customer_imgUrl}
-                              alt="no-img"
-                            />
-                          </div>
-                          <div className="comment-info-detail">
-                            <h1 className="comment-user-name">
-                              {comment.customer_name}
-                            </h1>
-                            <Rate
-                              className="comment-rate"
-                              character={<i className="anticon anticon-star" />}
-                              value={comment.rate}
-                              allowHalf={true}
-                              disabled={true}
-                            />
-                            <div className="comment-date">
-                              {comment.created_at}
+                    {this.props.vendorCommentList
+                      .sort((a, b) => {
+                        return new Date(b.created_at) - new Date(a.created_at);
+                      })
+                      .map(comment => (
+                        <li key={comment._id} className="comment-item">
+                          <div className="comment-info">
+                            <div className="user-img-wrapper">
+                              <img
+                                className="user-img"
+                                src={comment.customer_imgUrl}
+                                alt="no-img"
+                              />
+                            </div>
+                            <div className="comment-info-detail">
+                              <h1 className="comment-user-name">
+                                {comment.customer_name}
+                              </h1>
+                              <Rate
+                                className="comment-rate"
+                                character={
+                                  <i className="anticon anticon-star" />
+                                }
+                                value={comment.rate}
+                                allowHalf={true}
+                                disabled={true}
+                              />
+                              <div className="comment-date">
+                                {createdAt(comment.created_at)}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <p className="comment-content">{comment.body}</p>
-                        <div className="comment-img">
-                          <img src={comment.img_url} alt="no-img" />
-                        </div>
-                      </li>
-                    ))}
+                          <p className="comment-content">{comment.body}</p>
+                          <div className="comment-img">
+                            <img src={comment.img_url} alt="no-img" />
+                          </div>
+                        </li>
+                      ))}
                   </ul>
                 </div>
               )}

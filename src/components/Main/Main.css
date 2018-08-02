@@ -3,3 +3,7 @@
   position: relative;
   background: white;
 }
+
+.gm-style-iw {
+  left:8px !important;
+}

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { compose, withProps, withStateHandlers } from "recompose";
+import { compose, withProps } from "recompose";
 import {
   withScriptjs,
   withGoogleMap,
@@ -55,9 +55,13 @@ const Map = compose(
                       props.updateMarkerInfoWindowStatus(vendor._id, "close");
                     }}
                   >
-                    <div>
-                      <img className="info-window-img" src={vendor.img_url} />
-                      <h5np>{vendor.title}</h5>
+                    <div className="info-window-wrap">
+                      <img
+                        className="info-window-img"
+                        src={vendor.img_url}
+                        alt="no-img"
+                      />
+                      <h5 className="info-window-text">{vendor.title}</h5>
                     </div>
                   </InfoWindow>
                 )}

@@ -45,7 +45,10 @@ class Footer extends Component {
             })}`}
             onClick={this.handleClick.bind(this)}
           >
-            <div className="nav-items"><img className="nav-main" src={mainImageActive} /><span>메인</span></div>
+            <div className="nav-items">
+              <img className="nav-main" src={mainImageActive} alt="no-img" />
+              <span>메인</span>
+            </div>
           </Link>
           <Link
             to="/search"
@@ -54,7 +57,10 @@ class Footer extends Component {
             })}`}
             onClick={this.handleClick.bind(this)}
           >
-            <div className="nav-items"><img className="nav-find" src={findImageActive} /><span>검색</span></div>
+            <div className="nav-items">
+              <img className="nav-find" src={findImageActive} alt="no-img" />
+              <span>검색</span>
+            </div>
           </Link>
           <Link
             to="/mylist"
@@ -63,7 +69,10 @@ class Footer extends Component {
             })}`}
             onClick={this.handleClick.bind(this)}
           >
-            <div className="nav-items"><img className="nav-my" src={myImageActive} /><span>나의목록</span></div>
+            <div className="nav-items">
+              <img className="nav-my" src={myImageActive} alt="no-img" />
+              <span>나의목록</span>
+            </div>
           </Link>
         </nav>
       </footer>
