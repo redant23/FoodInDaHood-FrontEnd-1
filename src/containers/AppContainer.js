@@ -101,7 +101,7 @@ const mapDispatchToProps = dispatch => ({
 
     axios({
       method: "get",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendorList?lat=${lat}&lng=${lng}&distance=${distance}&startIdx=${startIdx}&endIdx=${endIdx}`
     }).then(res => {
       isInProgress = false;
       var vendorListTotalData = res.data.total;
@@ -162,7 +162,7 @@ const mapDispatchToProps = dispatch => ({
 
     axios({
       method: "get",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendor-search?keyword=${encodedKeyWord}`
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendor-search?keyword=${encodedKeyWord}`
     }).then(res => {
       dispatch(updateSearchedVendorListAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -175,7 +175,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(activateScrollLoadingAction());
     axios({
       method: "get",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendor-detail?vendorId=${vendorId}`
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendor-detail?vendorId=${vendorId}`
     }).then(res => {
       dispatch(updateVendorDetailInfoAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -204,7 +204,7 @@ const mapDispatchToProps = dispatch => ({
     };
 
     fetch(
-      "http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/auth/facebook",
+      "http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/auth/facebook",
       options
     ).then(r => {
       debugger;
@@ -246,7 +246,7 @@ const mapDispatchToProps = dispatch => ({
     formData.append("created_at", new Date());
 
     return fetch(
-      "http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/comment/new",
+      "http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/comment/new",
       {
         method: "POST",
         body: formData
@@ -256,14 +256,14 @@ const mapDispatchToProps = dispatch => ({
   _getVendorCommentListRequest: vendorId => {
     axios({
       method: "get",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/comment/list?vendorId=${vendorId}`
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/comment/list?vendorId=${vendorId}`
     }).then(res => {
       dispatch(updateVendorCommentListAction(res.data));
     });
 
     axios({
       method: "get",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendor-detail?vendorId=${vendorId}`
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/vendor/vendor-detail?vendorId=${vendorId}`
     }).then(res => {
       dispatch(updateVendorDetailInfoAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -278,7 +278,7 @@ const mapDispatchToProps = dispatch => ({
     };
     axios({
       method: "POST",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/favorite/add`,
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/favorite/add`,
       data
     }).then(() => {
       dispatch(addFavoriteInVendorDetailInfoAction(customerId));
@@ -295,7 +295,7 @@ const mapDispatchToProps = dispatch => ({
 
     axios({
       method: "POST",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/favorite/remove`,
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/favorite/remove`,
       data
     }).then(() => {
       dispatch(removeFavoriteInVendorDetailInfoAction(customerId));
@@ -306,7 +306,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(activateScrollLoadingAction());
     axios({
       method: "GET",
-      url: `http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/customer/myfavoritetrucks?customerId=${customerId}`
+      url: `http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/customer/myfavoritetrucks?customerId=${customerId}`
     }).then(res => {
       dispatch(updateMyFavoriteListAction(res.data));
       dispatch(deactivateScrollLoadingAction());
@@ -340,7 +340,7 @@ const mapDispatchToProps = dispatch => ({
     });
 
     fetch(
-      "http://testserver-env.rt8cjjvd7a.ap-northeast-2.elasticbeanstalk.com/api/vendor/signup/add",
+      "http://foodindahood-env.dcahkyg2d6.ap-northeast-2.elasticbeanstalk.com/api/vendor/signup/add",
       {
         method: "POST",
         body: formData,
