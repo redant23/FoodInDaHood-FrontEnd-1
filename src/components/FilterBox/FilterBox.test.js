@@ -1,7 +1,9 @@
+import { configure } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import React from "react";
 import FilterBox from "./FilterBox";
-
 import { shallow } from "enzyme";
+configure({ adapter: new Adapter() });
 
 function setup() {
   const actions = {

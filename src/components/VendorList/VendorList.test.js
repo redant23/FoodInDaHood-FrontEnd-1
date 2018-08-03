@@ -1,6 +1,9 @@
+import { configure } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import React from "react";
 import VendorList from "./VendorList";
 import { shallow } from "enzyme";
+configure({ adapter: new Adapter() });
 
 function setup(
   vendorList = [{ favorites: [], comments: [], address: "서울시 서초구", _id: 1 }],

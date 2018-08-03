@@ -1,8 +1,11 @@
+import { configure } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
 import React from "react";
 import MapWrapper from "./MapWrapper";
 import Map from "../Map/Map";
 import { createRenderer } from "react-test-renderer/shallow";
 import { shallow } from "enzyme";
+configure({ adapter: new Adapter() });
 
 const setup = (
   initialGeoLocation,
