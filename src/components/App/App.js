@@ -16,7 +16,7 @@ class App extends Component {
     var options = {
       enableHighAccuracy: false,
       maximumAge: 30000,
-      timeout: 3000
+      timeout: 5000
     };
 
     function success(pos) {

@@ -262,10 +262,10 @@ class VendorDetail extends Component {
             <div className="vendor-detail-body">
               {this.props.vendorDetailTapStatus.menuTap && (
                 <ul className="vendor-detail-body-menu">
-                  {vendor.menus.map(menu => {
+                  {vendor.menus.map((menu, index) => {
                     if (menu.is_main_menu) {
                       return (
-                        <li className="vendor-detail-menu-item" key={menu._id}>
+                        <li className="vendor-detail-menu-item" key={index}>
                           <div className="vendor-detail-menu-item-left">
                             <img
                               className="vendor-detail-menu-img"
